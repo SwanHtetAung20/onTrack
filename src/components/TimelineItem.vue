@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import type { TimeLineItem } from '@/constants'
+import { HOUR_IN_DAY, type TimeLineItem } from '@/constants'
 import BaseSelect from './BaseSelect.vue'
+import { isTimelineItemValid } from '@/validator'
 
-const props = withDefaults(defineProps<{ timelineItem?: TimeLineItem }>(), {
-  timelineItem: () => ({ hour: 0 }),
+const props = defineProps({
+  timelineItem: {
+    type: Object as () => TimeLineItem,
+    default: () => ({ hour: 0 }),
+    validator: isTimelineItemValid,
+  },
 })
 
 const hourLinkClasses = [
@@ -14,12 +19,12 @@ const hourLinkClasses = [
 ]
 
 const options = [
-  { value: '1', label: 'Coding' },
-  { value: '2', label: 'Reading' },
-  { value: '3', label: 'Training' },
+  { value: 1, label: 'Coding' },
+  { value: 2, label: 'Reading' },
+  { value: 3, label: 'Training' },
 ]
 
-const selectedActivityId = '3'
+const selectedActivityId = 3
 </script>
 
 <template>
