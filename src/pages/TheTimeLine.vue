@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import TimelineItem from '@/components/TimelineItem.vue'
 import { HOUR_IN_DAY, type TimeLineItem } from '@/constants'
-import { isTimelineItemValid } from '@/validator'
+import { isTimelineItemValid, validateTimelineItems } from '@/validator'
 defineProps({
   timelineItems: {
     type: Array as () => TimeLineItem[],
     default: () => [],
-    validator: (timelineItems: TimeLineItem[]) => timelineItems.every(isTimelineItemValid),
+    validator: validateTimelineItems,
   },
 })
 </script>

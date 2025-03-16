@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { XMarkIcon } from '@heroicons/vue/24/solid'
 import BaseButton from './BaseButton.vue'
+import { validateSelectOptions } from '@/validator'
 defineProps({
   options: {
     type: Array as () => { value: number; label: string }[],
     default: () => [],
-    validator: (options: { value: number; label: string }[]) =>
-      options.every((opt) => typeof opt.value === 'number' && typeof opt.label === 'string'),
+    validator: validateSelectOptions,
   },
   placeholder: {
     type: String,
@@ -17,20 +17,31 @@ defineProps({
     default: 0,
   },
 })
+
+const emit = defineEmits({
+  select(value: number) {
+    return typeof value === 'number'
+  },
+})
 </script>
 
 <template>
   <div class="flex gap-2">
-    <BaseButton>
+    <BaseButton @click="emit('select', 0)">
       <XMarkIcon class="h-8" />
     </BaseButton>
-    <select name="" id="" class="w-full truncate rounded bg-gray-100 py-1 px-2 text-2xl">
-      <option selected disabled value="">{{ placeholder }}</option>
+    <select
+      name=""
+      id=""
+      class="w-full truncate rounded bg-gray-100 py-1 px-2 text-2xl"
+      @change="emit('select', +$event.target.value)"
+    >
+      <option :selected="selected === 0" disabled value="">{{ placeholder }}</option>
       <option
         v-for="{ value, label } in options"
         :key="value"
         :value="value"
-        :selected="selected === value"
+        :selected="value === selected"
       >
         {{ label }}
       </option>
