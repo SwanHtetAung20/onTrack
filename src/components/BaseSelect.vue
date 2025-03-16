@@ -14,7 +14,7 @@ defineProps({
   },
   selected: {
     type: Number,
-    default: 0,
+    default: undefined,
   },
 })
 
@@ -31,12 +31,12 @@ const emit = defineEmits({
       <XMarkIcon class="h-8" />
     </BaseButton>
     <select
-      name=""
-      id=""
       class="w-full truncate rounded bg-gray-100 py-1 px-2 text-2xl"
       @change="emit('select', +$event.target.value)"
     >
-      <option :selected="selected === 0" disabled value="">{{ placeholder }}</option>
+      <option :selected="selected === undefined || selected === null" disabled value="">
+        {{ placeholder }}
+      </option>
       <option
         v-for="{ value, label } in options"
         :key="value"

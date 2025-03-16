@@ -1,8 +1,26 @@
-<script setup lang="ts"></script>
+<script lang="ts">
+import { BUTTON_TYPE_DANGER, BUTTON_TYPE_NEUTRAL } from '@/constants'
+const typeClasses = {
+  [BUTTON_TYPE_DANGER]: 'bg-red-500 enabled:hover:bg-red-600 text-white',
+  [BUTTON_TYPE_NEUTRAL]: 'bg-gray-100 enabled:hover:bg-gray-200',
+}
+</script>
+
+<script setup lang="ts">
+import { isButtonTypeValid } from '@/validator'
+
+defineProps({
+  type: {
+    type: String,
+    default: BUTTON_TYPE_NEUTRAL,
+    validator: isButtonTypeValid,
+  },
+})
+</script>
 
 <template>
   <button
-    class="rounded p-3 bg-gray-100 enabled:hover:bg-gray-200 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+    :class="`${typeClasses[type]} rounded p-3 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed`"
   >
     <slot></slot>
   </button>

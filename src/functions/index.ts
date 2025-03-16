@@ -24,3 +24,10 @@ export const generateTimelineItems = (): Array<{ hour: number }> => {
   }
   return timelineItems
 }
+
+export const generateActivitySelectOptions = (activities: string[]) => {
+  return activities.map((label, value) => ({
+    label,
+    value,
+  }))
+}
