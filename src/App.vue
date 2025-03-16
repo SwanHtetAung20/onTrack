@@ -12,6 +12,8 @@ const currentPage = ref<string>(normalizePageHash())
 
 const timelineItems: TimeLineItem[] = generateTimelineItems()
 
+const activities = ['Reading', 'Coding', 'Exercising']
+
 const goTo = (page: string): void => {
   currentPage.value = page
 }
@@ -21,7 +23,7 @@ const goTo = (page: string): void => {
   <TheHeader @navigate="goTo($event)" />
   <main class="flex grow flex-col">
     <TheTimeLine v-show="currentPage === PAGE_TIMELINE" :timeline-items="timelineItems" />
-    <TheActivities v-show="currentPage === PAGE_ACTIVITIES" />
+    <TheActivities v-show="currentPage === PAGE_ACTIVITIES" :activities="activities" />
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
   </main>
   <TheNav :current-page="currentPage" @navigate="goTo($event)" />

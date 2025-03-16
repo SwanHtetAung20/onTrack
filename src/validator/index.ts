@@ -19,3 +19,11 @@ export const isTimelineItemValid = (timelineItem: TimeLineItem): boolean => {
 export const validateSelectOptions = (options: { value: number; label: string }[]) => {
   return options.every((opt) => typeof opt.value === 'number' && typeof opt.label === 'string')
 }
+
+export const isActivityItemsValid = (activityItems: string[]): boolean => {
+  return activityItems.every(isActivityItemValid)
+}
+
+export const isActivityItemValid = (value: string): boolean => {
+  return typeof value === 'string' && value.length > 0
+}
