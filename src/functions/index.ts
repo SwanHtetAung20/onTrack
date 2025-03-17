@@ -5,6 +5,8 @@ import {
   PAGE_TIMELINE,
   HOUR_IN_DAY,
   MIDNIGHT_HOUR,
+  type Activity,
+  SECONDS_IN_HOUR,
 } from '../constants'
 
 export const normalizePageHash = (): string => {
@@ -30,4 +32,28 @@ export const generateActivitySelectOptions = (activities: string[]) => {
     label,
     value,
   }))
+}
+
+export const generateActivities = (): Activity[] => {
+  return [
+    {
+      id: id(),
+      name: 'Reading',
+      secondsToComplete: 0 * SECONDS_IN_HOUR,
+    },
+    {
+      id: id(),
+      name: 'Training',
+      secondsToComplete: 1 * SECONDS_IN_HOUR,
+    },
+    {
+      id: id(),
+      name: 'Coding',
+      secondsToComplete: 2 * SECONDS_IN_HOUR,
+    },
+  ]
+}
+
+const id = (): string => {
+  return Date.now().toString(36) + Math.random().toString(36).substring(2)
 }
