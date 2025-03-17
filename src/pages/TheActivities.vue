@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ActivityItems from '@/components/ActivityItems.vue'
-import { isActivityItemsValid } from '@/validator'
+import { isActivityItemsValid, isActivityItemValid } from '@/validator'
+import TheActivityForm from '@/components/TheActivityForm.vue'
 
 defineProps({
   activities: {
@@ -11,10 +12,13 @@ defineProps({
 })
 
 const emit = defineEmits({
-  deleteActivity(activity: string) {
-    return typeof activity === 'string'
-  },
+  deleteActivity: isActivityItemValid,
+  createActivity: isActivityItemValid,
 })
+
+const createActivity = (activity: string) => {
+  emit('createActivity', activity)
+}
 </script>
 
 <template>
@@ -27,5 +31,6 @@ const emit = defineEmits({
         @delete="emit('deleteActivity', activity)"
       />
     </ul>
+    <TheActivityForm @submit="createActivity" />
   </div>
 </template>

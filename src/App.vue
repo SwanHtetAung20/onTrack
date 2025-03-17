@@ -18,7 +18,7 @@ const timelineItems: TimeLineItem[] = generateTimelineItems()
 
 const activities = ref(['Reading', 'Coding', 'Exercising'])
 
-const activitySelectOptions = generateActivitySelectOptions(activities.value)
+const activitySelectOptions = ref(generateActivitySelectOptions(activities.value))
 
 const goTo = (page: string): void => {
   currentPage.value = page
@@ -29,6 +29,11 @@ const deleteActivityItem = (activity: string): void => {
   if (index !== -1) {
     activities.value.splice(index, 1)
   }
+}
+
+const createActivity = (activity: string): void => {
+  activities.value.push(activity)
+  activitySelectOptions.value.push({ value: activitySelectOptions.value.length, label: activity })
 }
 </script>
 
@@ -44,6 +49,7 @@ const deleteActivityItem = (activity: string): void => {
       v-show="currentPage === PAGE_ACTIVITIES"
       :activities="activities"
       @delete-activity="deleteActivityItem"
+      @create-activity="createActivity"
     />
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
   </main>
