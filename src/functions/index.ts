@@ -35,23 +35,11 @@ export const generateActivitySelectOptions = (activities: Activity[]) => {
 }
 
 export const generateActivities = (): Activity[] => {
-  return [
-    {
-      id: id(),
-      name: 'Reading',
-      secondsToComplete: 0 * SECONDS_IN_HOUR,
-    },
-    {
-      id: id(),
-      name: 'Training',
-      secondsToComplete: 1 * SECONDS_IN_HOUR,
-    },
-    {
-      id: id(),
-      name: 'Coding',
-      secondsToComplete: 2 * SECONDS_IN_HOUR,
-    },
-  ]
+  return ['Reading', 'Training', 'Coding'].map((name, index) => ({
+    id: id(),
+    name,
+    secondsToComplete: index * SECONDS_IN_HOUR,
+  }))
 }
 
 export const id = (): string => {

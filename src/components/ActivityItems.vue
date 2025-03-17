@@ -4,8 +4,7 @@ import BaseButton from './BaseButton.vue'
 import { TrashIcon } from '@heroicons/vue/24/solid'
 import BaseSelect from './BaseSelect.vue'
 import { isActivityItemValid } from '@/validator'
-import { BUTTON_TYPE_DANGER } from '@/constants'
-import type Activity from '@/constants'
+import { BUTTON_TYPE_DANGER, PERIOD_SELECT_OPTIONS, type Activity } from '@/constants'
 
 defineProps({
   activity: {
@@ -14,12 +13,6 @@ defineProps({
     validator: isActivityItemValid,
   },
 })
-
-const periodSelectOptions = [
-  { value: 1, label: '0:15' },
-  { value: 2, label: '0:30' },
-  { value: 3, label: '0:45' },
-]
 
 const secondsToComplete = ref<number | string>()
 
@@ -38,7 +31,7 @@ const emit = defineEmits(['delete'])
       <BaseSelect
         class="font-mono"
         placeholder="h:mm"
-        :options="periodSelectOptions"
+        :options="PERIOD_SELECT_OPTIONS"
         :selected="secondsToComplete"
         @select="secondsToComplete = $event"
       />

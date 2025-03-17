@@ -20,20 +20,20 @@ defineProps({
 })
 
 const emit = defineEmits({
-  select(value: string | number) {
-    return typeof value === 'string' || typeof value === 'number'
+  select(value?: string | number) {
+    return typeof value === 'string' || typeof value === 'number' || value === undefined
   },
 })
 </script>
 
 <template>
   <div class="flex gap-2">
-    <BaseButton :type="BUTTON_TYPE_NEUTRAL" @click="emit('select', 0)">
+    <BaseButton :type="BUTTON_TYPE_NEUTRAL" @click="emit('select')">
       <XMarkIcon class="h-8" />
     </BaseButton>
     <select
       class="w-full truncate rounded bg-gray-100 py-1 px-2 text-2xl"
-      @change="emit('select', +$event.target.value)"
+      @change="emit('select', $event.target.value)"
     >
       <option :selected="selected === undefined || selected === null" disabled value="">
         {{ placeholder }}

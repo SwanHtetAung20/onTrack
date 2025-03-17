@@ -4,7 +4,7 @@ import TheNav from './components/TheNav.vue'
 import TheActivities from './pages/TheActivities.vue'
 import TheProgress from './pages/TheProgress.vue'
 import TheTimeLine from './pages/TheTimeLine.vue'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import {
   PAGE_ACTIVITIES,
   PAGE_PROGRESS,
@@ -26,7 +26,7 @@ const timelineItems: TimeLineItem[] = generateTimelineItems()
 
 const activities = ref(generateActivities())
 
-const activitySelectOptions = ref(generateActivitySelectOptions(activities.value))
+const activitySelectOptions = computed(() => generateActivitySelectOptions(activities.value))
 
 const goTo = (page: string): void => {
   currentPage.value = page

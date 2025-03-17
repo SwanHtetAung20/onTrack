@@ -27,3 +27,9 @@ export interface Activity {
   name: string
   secondsToComplete: number
 }
+
+export const PERIOD_SELECT_OPTIONS = [
+  { value: 15 * 60, label: '0:15' },
+  { value: 30 * 60, label: '0:30' },
+  { value: 45 * 60, label: '0:45' },
+]
