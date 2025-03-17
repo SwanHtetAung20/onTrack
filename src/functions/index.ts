@@ -7,6 +7,7 @@ import {
   MIDNIGHT_HOUR,
   type Activity,
   SECONDS_IN_HOUR,
+  type TimeLineItem,
 } from '../constants'
 
 export const normalizePageHash = (): string => {
@@ -18,11 +19,11 @@ export const normalizePageHash = (): string => {
   return PAGE_TIMELINE
 }
 
-export const generateTimelineItems = (): Array<{ hour: number }> => {
+export const generateTimelineItems = (): TimeLineItem[] => {
   const timelineItems = []
 
   for (let hour = MIDNIGHT_HOUR; hour < HOUR_IN_DAY; hour++) {
-    timelineItems.push({ hour })
+    timelineItems.push({ hour, activityId: null })
   }
   return timelineItems
 }

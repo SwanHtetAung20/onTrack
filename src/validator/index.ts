@@ -47,3 +47,13 @@ export const isActivityItemValid = ({ id, name, secondsToComplete }: Activity): 
 export const isButtonTypeValid = (value: string): boolean => {
   return BUTTON_TYPES.includes(value)
 }
+
+export const isActivity = (value: Activity | null): value is Activity => {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'id' in value &&
+    'name' in value &&
+    'secondsToComplete' in value
+  )
+}

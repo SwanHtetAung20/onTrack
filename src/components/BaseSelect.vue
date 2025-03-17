@@ -14,21 +14,21 @@ defineProps({
     required: true,
   },
   selected: {
-    type: [String, Number],
+    type: [String, Number, null],
     default: undefined,
   },
 })
 
 const emit = defineEmits({
-  select(value?: string | number) {
-    return typeof value === 'string' || typeof value === 'number' || value === undefined
+  select(value: string | null) {
+    return typeof value === 'string' || typeof value === 'number' || value === null
   },
 })
 </script>
 
 <template>
   <div class="flex gap-2">
-    <BaseButton :type="BUTTON_TYPE_NEUTRAL" @click="emit('select')">
+    <BaseButton :type="BUTTON_TYPE_NEUTRAL" @click="emit('select', null)">
       <XMarkIcon class="h-8" />
     </BaseButton>
     <select

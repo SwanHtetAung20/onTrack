@@ -20,6 +20,7 @@ export const NAV_ITEMS = {
 
 export interface TimeLineItem {
   hour: number
+  activityId: string | null
 }
 
 export interface Activity {

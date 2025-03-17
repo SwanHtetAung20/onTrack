@@ -22,7 +22,7 @@ import {
 
 const currentPage = ref<string>(normalizePageHash())
 
-const timelineItems: TimeLineItem[] = generateTimelineItems()
+const timelineItems = ref<TimeLineItem[]>(generateTimelineItems())
 
 const activities = ref(generateActivities())
 
@@ -33,6 +33,12 @@ const goTo = (page: string): void => {
 }
 
 const deleteActivityItem = (deleteActivity: Activity): void => {
+  timelineItems.value.forEach((timelineItem: TimeLineItem) => {
+    if (timelineItem.activityId === deleteActivity.id) {
+      timelineItem.activityId = null
+    }
+  })
+
   const index = activities.value.findIndex((activity) => activity.id === deleteActivity.id)
   if (index !== -1) {
     activities.value.splice(index, 1)
@@ -46,6 +52,16 @@ const createActivity = (name: string): void => {
     secondsToComplete: 0,
   })
 }
+
+const setTimelineItemActivity = ({
+  timelineItem,
+  activity,
+}: {
+  timelineItem: TimeLineItem
+  activity: Activity | null
+}): void => {
+  timelineItem.activityId = activity?.id || null
+}
 </script>
 
 <template>
@@ -55,6 +71,8 @@ const createActivity = (name: string): void => {
       v-show="currentPage === PAGE_TIMELINE"
       :timeline-items="timelineItems"
       :activity-select-options="activitySelectOptions"
+      :activities="activities"
+      @set-timeline-item-activity="setTimelineItemActivity"
     />
     <TheActivities
       v-show="currentPage === PAGE_ACTIVITIES"

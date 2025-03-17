@@ -1,8 +1,14 @@
 <script setup lang="ts">
-import { HOUR_IN_DAY, type TimeLineItem } from '@/constants'
+import { HOUR_IN_DAY, type TimeLineItem, Activity } from '@/constants'
 import BaseSelect from './BaseSelect.vue'
-import { isTimelineItemValid, validateSelectOptions } from '@/validator'
-import { ref } from 'vue'
+import {
+  isActivity,
+  isActivityItemsValid,
+  isActivityItemValid,
+  isTimelineItemValid,
+  validateSelectOptions,
+} from '@/validator'
+import { ref, toRaw } from 'vue'
 import TimelineHour from './TimelineHour.vue'
 
 const props = defineProps({
@@ -16,9 +22,24 @@ const props = defineProps({
     default: () => [],
     validator: validateSelectOptions,
   },
+  activities: {
+    type: Array as () => Activity[],
+    required: true,
+    validator: isActivityItemsValid,
+  },
 })
 
-const selectedActivityId = ref<number | string>()
+const emit = defineEmits({
+  selectActivity(value: Activity | null) {
+    return isActivity(value) || value === null
+  },
+})
+
+const selectActivity = (activityId: string | null): void => {
+  const activity = props.activities.find((activity) => activity.id === activityId) || null
+  const rawActivity = activity ? toRaw(activity) : null
+  emit('selectActivity', rawActivity)
+}
 </script>
 
 <template>
@@ -27,8 +48,8 @@ const selectedActivityId = ref<number | string>()
     <BaseSelect
       :options="activitySelectOptions"
       placeholder="Rest"
-      :selected="selectedActivityId"
-      @select="selectedActivityId = $event"
+      :selected="timelineItem.activityId"
+      @select="selectActivity"
     />
   </li>
 </template>
