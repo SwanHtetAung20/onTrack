@@ -5,18 +5,26 @@ import TheActivities from './pages/TheActivities.vue'
 import TheProgress from './pages/TheProgress.vue'
 import TheTimeLine from './pages/TheTimeLine.vue'
 import { ref } from 'vue'
-import { PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_TIMELINE, type TimeLineItem } from './constants'
+import {
+  PAGE_ACTIVITIES,
+  PAGE_PROGRESS,
+  PAGE_TIMELINE,
+  type Activity,
+  type TimeLineItem,
+} from './constants'
 import {
   normalizePageHash,
   generateTimelineItems,
   generateActivitySelectOptions,
+  generateActivities,
+  id,
 } from './functions'
 
 const currentPage = ref<string>(normalizePageHash())
 
 const timelineItems: TimeLineItem[] = generateTimelineItems()
 
-const activities = ref(['Reading', 'Coding', 'Exercising'])
+const activities = ref(generateActivities())
 
 const activitySelectOptions = ref(generateActivitySelectOptions(activities.value))
 
@@ -24,16 +32,19 @@ const goTo = (page: string): void => {
   currentPage.value = page
 }
 
-const deleteActivityItem = (activity: string): void => {
-  const index = activities.value.indexOf(activity)
+const deleteActivityItem = (deleteActivity: Activity): void => {
+  const index = activities.value.findIndex((activity) => activity.id === deleteActivity.id)
   if (index !== -1) {
     activities.value.splice(index, 1)
   }
 }
 
-const createActivity = (activity: string): void => {
-  activities.value.push(activity)
-  activitySelectOptions.value.push({ value: activitySelectOptions.value.length, label: activity })
+const createActivity = (name: string): void => {
+  activities.value.push({
+    id: id(),
+    name,
+    secondsToComplete: 0,
+  })
 }
 </script>
 
