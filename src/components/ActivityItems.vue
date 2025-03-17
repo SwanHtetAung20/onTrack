@@ -5,10 +5,11 @@ import { TrashIcon } from '@heroicons/vue/24/solid'
 import BaseSelect from './BaseSelect.vue'
 import { isActivityItemValid } from '@/validator'
 import { BUTTON_TYPE_DANGER } from '@/constants'
+import type Activity from '@/constants'
 
 defineProps({
   activity: {
-    type: String,
+    type: Object as () => Activity,
     required: true,
     validator: isActivityItemValid,
   },
@@ -20,7 +21,7 @@ const periodSelectOptions = [
   { value: 3, label: '0:45' },
 ]
 
-const secondsToComplete = ref<number>()
+const secondsToComplete = ref<number | string>()
 
 const emit = defineEmits(['delete'])
 </script>
@@ -31,7 +32,7 @@ const emit = defineEmits(['delete'])
       <BaseButton :type="BUTTON_TYPE_DANGER" @click="emit('delete')">
         <TrashIcon class="h-8" />
       </BaseButton>
-      <span class="text-xl truncate">{{ activity }}</span>
+      <span class="text-xl truncate">{{ activity.name }}</span>
     </div>
     <div>
       <BaseSelect

@@ -9,7 +9,7 @@ defineProps({
     validator: validateTimelineItems,
   },
   activitySelectOptions: {
-    type: Array as () => Array<{ value: number; label: string }>,
+    type: Array as () => Array<{ value: number | string; label: string }>,
     default: () => [],
     validator: validateSelectOptions,
   },

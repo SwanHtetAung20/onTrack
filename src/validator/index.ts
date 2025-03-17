@@ -1,4 +1,11 @@
-import { NAV_ITEMS, HOUR_IN_DAY, type TimeLineItem, MIDNIGHT_HOUR, BUTTON_TYPES } from '@/constants'
+import {
+  NAV_ITEMS,
+  HOUR_IN_DAY,
+  type TimeLineItem,
+  MIDNIGHT_HOUR,
+  BUTTON_TYPES,
+  type Activity,
+} from '@/constants'
 
 export const isPageValid = (page: string): boolean => {
   return Object.keys(NAV_ITEMS).includes(page)
@@ -18,16 +25,23 @@ export const isTimelineItemValid = (timelineItem: TimeLineItem): boolean => {
 
 export const validateSelectOptions = (options: { value: number; label: string }[]) => {
   return options.every(
-    (opt) => typeof opt.value === 'number' && typeof opt.label === 'string' && opt.label !== '',
+    (opt) =>
+      (typeof opt.value === 'string' || typeof opt.value === 'number') &&
+      typeof opt.label === 'string' &&
+      opt.label !== '',
   )
 }
 
-export const isActivityItemsValid = (activityItems: string[]): boolean => {
+export const isActivityItemsValid = (activityItems: Activity[]): boolean => {
   return activityItems.every(isActivityItemValid)
 }
 
-export const isActivityItemValid = (value: string): boolean => {
-  return typeof value === 'string' && value.length > 0
+export const isActivityItemValid = ({ id, name, secondsToComplete }: Activity): boolean => {
+  return [
+    typeof id === 'string' && id.length > 0,
+    typeof name === 'string' && name.length > 0,
+    typeof secondsToComplete === 'number' && secondsToComplete >= 0,
+  ].every(Boolean)
 }
 
 export const isButtonTypeValid = (value: string): boolean => {

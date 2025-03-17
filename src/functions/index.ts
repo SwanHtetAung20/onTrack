@@ -27,10 +27,10 @@ export const generateTimelineItems = (): Array<{ hour: number }> => {
   return timelineItems
 }
 
-export const generateActivitySelectOptions = (activities: string[]) => {
-  return activities.map((label, value) => ({
-    label,
-    value,
+export const generateActivitySelectOptions = (activities: Activity[]) => {
+  return activities.map((activity) => ({
+    value: activity.id,
+    label: activity.name,
   }))
 }
 
@@ -54,6 +54,6 @@ export const generateActivities = (): Activity[] => {
   ]
 }
 
-const id = (): string => {
+export const id = (): string => {
   return Date.now().toString(36) + Math.random().toString(36).substring(2)
 }

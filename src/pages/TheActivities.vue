@@ -3,10 +3,11 @@ import ActivityItems from '@/components/ActivityItems.vue'
 import { isActivityItemsValid, isActivityItemValid } from '@/validator'
 import TheActivityForm from '@/components/TheActivityForm.vue'
 import TheActivitiesEmptyStage from '@/components/TheActivitiesEmptyStage.vue'
+import type { Activity } from '@/constants'
 
 defineProps({
   activities: {
-    type: Array as () => string[],
+    type: Array as () => Activity[],
     default: () => [],
     validator: isActivityItemsValid,
   },
@@ -14,11 +15,13 @@ defineProps({
 
 const emit = defineEmits({
   deleteActivity: isActivityItemValid,
-  createActivity: isActivityItemValid,
+  createActivity(name: string) {
+    return typeof name === 'string'
+  },
 })
 
-const createActivity = (activity: string) => {
-  emit('createActivity', activity)
+const createActivity = (name: string) => {
+  emit('createActivity', name)
 }
 </script>
 
@@ -27,7 +30,7 @@ const createActivity = (activity: string) => {
     <ul v-if="activities.length" class="divide-y grow">
       <ActivityItems
         v-for="activity in activities"
-        :key="activity"
+        :key="activity.id"
         :activity="activity"
         @delete="emit('deleteActivity', activity)"
       />

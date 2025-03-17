@@ -8,7 +8,9 @@ import { isActivityItemValid } from '@/validator'
 const activity = ref<string>('')
 
 const emit = defineEmits({
-  submit: isActivityItemValid,
+  submit(activity: string) {
+    return typeof activity === 'string'
+  },
 })
 
 const submit = async () => {

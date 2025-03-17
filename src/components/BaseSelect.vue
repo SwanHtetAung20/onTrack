@@ -5,7 +5,7 @@ import { validateSelectOptions } from '@/validator'
 import { BUTTON_TYPE_NEUTRAL } from '@/constants'
 defineProps({
   options: {
-    type: Array as () => { value: number; label: string }[],
+    type: Array as () => { value: number | string; label: string }[],
     default: () => [],
     validator: validateSelectOptions,
   },
@@ -14,14 +14,14 @@ defineProps({
     required: true,
   },
   selected: {
-    type: Number,
+    type: [String, Number],
     default: undefined,
   },
 })
 
 const emit = defineEmits({
-  select(value: number) {
-    return typeof value === 'number'
+  select(value: string | number) {
+    return typeof value === 'string' || typeof value === 'number'
   },
 })
 </script>
