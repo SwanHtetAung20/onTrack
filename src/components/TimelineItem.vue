@@ -51,6 +51,6 @@ const selectActivity = (activityId: string | null | number): void => {
       :selected="timelineItem.activityId"
       @select="selectActivity"
     />
-    <TimelineStopWatch :seconds="timelineItem.activitySeconds" />
+    <TimelineStopWatch :seconds="timelineItem.activitySeconds" :hour="timelineItem.hour" />
   </li>
 </template>

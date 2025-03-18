@@ -1,6 +1,6 @@
 import {
   NAV_ITEMS,
-  HOUR_IN_DAY,
+  HOURS_IN_DAY,
   type TimeLineItem,
   MIDNIGHT_HOUR,
   BUTTON_TYPES,
@@ -19,7 +19,7 @@ export const isTimelineItemValid = (timelineItem: TimeLineItem): boolean => {
   return (
     typeof timelineItem.hour === 'number' &&
     timelineItem.hour >= MIDNIGHT_HOUR &&
-    timelineItem.hour <= HOUR_IN_DAY
+    timelineItem.hour <= HOURS_IN_DAY
   )
 }
 

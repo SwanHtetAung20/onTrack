@@ -1,8 +1,8 @@
 import { isPageValid } from '@/validator'
 import {
   PAGE_TIMELINE,
-  HOUR_IN_DAY,
-  MIDNIGHT_HOUR,
+  HOURS_IN_DAY,
+  SECONDS_IN_MINUTE,
   type Activity,
   SECONDS_IN_HOUR,
   type TimeLineItem,
@@ -19,13 +19,12 @@ export const normalizePageHash = (): string => {
   return PAGE_TIMELINE
 }
 
-export const generateTimelineItems = (): TimeLineItem[] => {
-  const timelineItems = []
-
-  for (let hour = MIDNIGHT_HOUR; hour < HOUR_IN_DAY; hour++) {
-    timelineItems.push({ hour, activityId: null })
-  }
-  return timelineItems
+export const generateTimelineItems = (activities: Activity[]): TimeLineItem[] => {
+  return [...Array(HOURS_IN_DAY).keys()].map((hour) => ({
+    hour,
+    activityId: hour % 4 === 0 ? null : activities[hour % 2].id,
+    activitySeconds: hour % 4 === 0 ? 0 : (15 * SECONDS_IN_MINUTE * hour) % SECONDS_IN_HOUR,
+  }))
 }
 
 export const generateActivitySelectOptions = (activities: Activity[]) => {

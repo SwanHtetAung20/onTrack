@@ -22,9 +22,9 @@ import {
 
 const currentPage = ref<string>(normalizePageHash())
 
-const timelineItems = ref<TimeLineItem[]>(generateTimelineItems())
-
 const activities = ref(generateActivities())
+
+const timelineItems = ref<TimeLineItem[]>(generateTimelineItems(activities.value))
 
 const activitySelectOptions = computed(() => generateActivitySelectOptions(activities.value))
 
@@ -36,6 +36,7 @@ const deleteActivityItem = (deleteActivity: Activity): void => {
   timelineItems.value.forEach((timelineItem: TimeLineItem) => {
     if (timelineItem.activityId === deleteActivity.id) {
       timelineItem.activityId = null
+      timelineItem.activitySeconds = 0
     }
   })
 
