@@ -20,7 +20,7 @@ defineProps({
 })
 
 const emit = defineEmits({
-  select(value: string | null) {
+  select(value: string | null | number) {
     return typeof value === 'string' || typeof value === 'number' || value === null
   },
 })

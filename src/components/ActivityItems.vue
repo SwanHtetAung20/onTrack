@@ -14,9 +14,14 @@ defineProps({
   },
 })
 
-const secondsToComplete = ref<number | string>()
-
-const emit = defineEmits(['delete'])
+const emit = defineEmits({
+  delete() {
+    return true
+  },
+  setSecondsToComplete(value: number | null | string) {
+    return typeof value === 'number' || value === null || typeof value === 'string'
+  },
+})
 </script>
 
 <template>
@@ -32,8 +37,8 @@ const emit = defineEmits(['delete'])
         class="font-mono"
         placeholder="h:mm"
         :options="PERIOD_SELECT_OPTIONS"
-        :selected="secondsToComplete"
-        @select="secondsToComplete = $event"
+        :selected="activity.secondsToComplete || null"
+        @select="emit('setSecondsToComplete', $event || 0)"
       />
     </div>
   </li>

@@ -35,7 +35,7 @@ const emit = defineEmits({
   },
 })
 
-const selectActivity = (activityId: string | null): void => {
+const selectActivity = (activityId: string | null | number): void => {
   const activity = props.activities.find((activity) => activity.id === activityId) || null
   const rawActivity = activity ? toRaw(activity) : null
   emit('selectActivity', rawActivity)

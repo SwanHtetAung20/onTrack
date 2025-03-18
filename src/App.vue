@@ -53,14 +53,15 @@ const createActivity = (name: string): void => {
   })
 }
 
-const setTimelineItemActivity = ({
-  timelineItem,
-  activity,
-}: {
-  timelineItem: TimeLineItem
-  activity: Activity | null
-}): void => {
+const setTimelineItemActivity = (timelineItem: TimeLineItem, activity: Activity | null): void => {
   timelineItem.activityId = activity?.id || null
+}
+
+const setSecondsToComplete = (
+  activity: Activity,
+  secondsToComplete: number | null | string,
+): void => {
+  activity.secondsToComplete = Number(secondsToComplete) || 0
 }
 </script>
 
@@ -79,6 +80,7 @@ const setTimelineItemActivity = ({
       :activities="activities"
       @delete-activity="deleteActivityItem"
       @create-activity="createActivity"
+      @set-seconds-to-complete="setSecondsToComplete"
     />
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
   </main>

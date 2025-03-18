@@ -18,6 +18,14 @@ const emit = defineEmits({
   createActivity(name: string) {
     return typeof name === 'string'
   },
+  setSecondsToComplete(activity: Activity, secondsToComplete: number | null | string) {
+    return (
+      isActivityItemValid(activity) &&
+      (typeof secondsToComplete === 'number' ||
+        secondsToComplete === null ||
+        typeof secondsToComplete === 'string')
+    )
+  },
 })
 
 const createActivity = (name: string) => {
@@ -33,6 +41,7 @@ const createActivity = (name: string) => {
         :key="activity.id"
         :activity="activity"
         @delete="emit('deleteActivity', activity)"
+        @set-seconds-to-complete="emit('setSecondsToComplete', activity, $event)"
       />
     </ul>
     <TheActivitiesEmptyStage v-else />
