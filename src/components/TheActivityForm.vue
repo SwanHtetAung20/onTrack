@@ -3,7 +3,6 @@ import BaseButton from './BaseButton.vue'
 import { PlusIcon } from '@heroicons/vue/24/solid'
 import { BUTTON_TYPE_PRIMARY } from '@/constants'
 import { ref, nextTick } from 'vue'
-import { isActivityItemValid } from '@/validator'
 
 const activity = ref<string>('')
 

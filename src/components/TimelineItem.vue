@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { HOUR_IN_DAY, type TimeLineItem, Activity } from '@/constants'
+import { type TimeLineItem, type Activity } from '@/constants'
 import BaseSelect from './BaseSelect.vue'
 import {
   isActivity,
   isActivityItemsValid,
-  isActivityItemValid,
   isTimelineItemValid,
   validateSelectOptions,
 } from '@/validator'
-import { ref, toRaw } from 'vue'
+import { toRaw } from 'vue'
 import TimelineHour from './TimelineHour.vue'
+import TimelineStopWatch from './TimelineStopWatch.vue'
 
 const props = defineProps({
   timelineItem: {
@@ -51,5 +51,6 @@ const selectActivity = (activityId: string | null | number): void => {
       :selected="timelineItem.activityId"
       @select="selectActivity"
     />
+    <TimelineStopWatch :seconds="timelineItem.activitySeconds" />
   </li>
 </template>

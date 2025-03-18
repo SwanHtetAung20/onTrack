@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import BaseButton from './BaseButton.vue'
 import { TrashIcon } from '@heroicons/vue/24/solid'
 import BaseSelect from './BaseSelect.vue'

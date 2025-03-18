@@ -1,7 +1,5 @@
 import { isPageValid } from '@/validator'
 import {
-  PAGE_ACTIVITIES,
-  PAGE_PROGRESS,
   PAGE_TIMELINE,
   HOUR_IN_DAY,
   MIDNIGHT_HOUR,
@@ -9,6 +7,7 @@ import {
   SECONDS_IN_HOUR,
   type TimeLineItem,
   MINUTES_IN_HOUR,
+  MILLISECONDS_IN_SECOND,
 } from '../constants'
 
 export const normalizePageHash = (): string => {
@@ -61,4 +60,16 @@ const generatePeriodSelectionLabel = (periodInMinute: number) => {
     .padStart(2, '0')
   const minutes = (periodInMinute % MINUTES_IN_HOUR).toString().padStart(2, '0')
   return `${hours}:${minutes}`
+}
+
+export const formatSecond = (second: number) => {
+  const date = new Date()
+
+  date.setTime(Math.abs(second) * MILLISECONDS_IN_SECOND)
+
+  const utc = date.toUTCString()
+
+  // *  utc = "Thu, 01 Jan 1970 00:01:00 GMT"
+
+  return utc.substring(utc.indexOf(':') - 2, utc.indexOf(':') + 6)
 }
