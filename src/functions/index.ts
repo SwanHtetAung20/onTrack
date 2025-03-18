@@ -8,6 +8,7 @@ import {
   type Activity,
   SECONDS_IN_HOUR,
   type TimeLineItem,
+  MINUTES_IN_HOUR,
 } from '../constants'
 
 export const normalizePageHash = (): string => {
@@ -45,4 +46,19 @@ export const generateActivities = (): Activity[] => {
 
 export const id = (): string => {
   return Date.now().toString(36) + Math.random().toString(36).substring(2)
+}
+
+export const generatePeriodSelection = (periodInMinutes: Array<number>) => {
+  return periodInMinutes.map((periodInMinute) => ({
+    value: periodInMinute * SECONDS_IN_HOUR,
+    label: generatePeriodSelectionLabel(periodInMinute),
+  }))
+}
+
+const generatePeriodSelectionLabel = (periodInMinute: number) => {
+  const hours = Math.floor(periodInMinute / MINUTES_IN_HOUR)
+    .toString()
+    .padStart(2, '0')
+  const minutes = (periodInMinute % MINUTES_IN_HOUR).toString().padStart(2, '0')
+  return `${hours}:${minutes}`
 }
