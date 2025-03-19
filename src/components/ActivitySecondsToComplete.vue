@@ -17,11 +17,10 @@ const props = defineProps({
   },
 })
 
-const secondsDiff = computed(() => {
-  return (
-    getTotalActivitySeconds(props.activity, props.timelineItems) - props.activity.secondsToComplete
-  )
-})
+const secondsDiff = computed(
+  () =>
+    getTotalActivitySeconds(props.activity, props.timelineItems) - props.activity.secondsToComplete,
+)
 
 const sign = computed(() => (secondsDiff.value >= 0 ? '+' : '-'))
 

@@ -36,6 +36,9 @@ const emit = defineEmits({
   scrollToHour(hour: number) {
     return typeof hour === 'number'
   },
+  updateActivitySeconds(value: number) {
+    return typeof value === 'number'
+  },
 })
 
 const selectActivity = (activityId: string | null | number): void => {
@@ -57,6 +60,10 @@ const selectActivity = (activityId: string | null | number): void => {
       :selected="timelineItem.activityId"
       @select="selectActivity"
     />
-    <TimelineStopWatch :seconds="timelineItem.activitySeconds" :hour="timelineItem.hour" />
+    <TimelineStopWatch
+      :seconds="timelineItem.activitySeconds"
+      :hour="timelineItem.hour"
+      @update-seconds="emit('updateActivitySeconds', $event)"
+    />
   </li>
 </template>

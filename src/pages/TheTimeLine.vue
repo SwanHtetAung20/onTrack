@@ -38,6 +38,9 @@ const emit = defineEmits({
   setTimelineItemActivity(timelineItem: TimeLineItem, activity: Activity | null) {
     return isTimelineItemValid(timelineItem) && (activity === null || isActivity(activity))
   },
+  updateTimelineItemActivitySeconds(timelineItem: TimeLineItem, value: number) {
+    return typeof value === 'number' && isTimelineItemValid(timelineItem)
+  },
 })
 
 const timelineItemsRef = ref<ComponentPublicInstance[]>([])
@@ -79,6 +82,7 @@ watchPostEffect(async () => {
         @select-activity="emit('setTimelineItemActivity', timelineItem, $event)"
         ref="timelineItemsRef"
         @scroll-to-hour="scrollToHour"
+        @update-activity-seconds="emit('updateTimelineItemActivitySeconds', timelineItem, $event)"
       />
     </ul>
   </div>
