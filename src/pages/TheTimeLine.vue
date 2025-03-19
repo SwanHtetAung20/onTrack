@@ -8,7 +8,7 @@ import {
   isActivity,
   isTimelineItemValid,
 } from '@/validator'
-import { ref, nextTick, ComponentPublicInstance, watchPostEffect } from 'vue'
+import { ref, nextTick, type ComponentPublicInstance, watchPostEffect } from 'vue'
 const props = defineProps({
   timelineItems: {
     type: Array as () => TimeLineItem[],
@@ -55,6 +55,9 @@ const scrollToHour = (hour: number) => {
     })
   }
 }
+
+defineExpose({ scrollToHour })
+
 watchPostEffect(async () => {
   if (props.currentPage === PAGE_TIMELINE) {
     await nextTick()

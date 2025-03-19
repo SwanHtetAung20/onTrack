@@ -28,7 +28,20 @@ const timelineItems = ref<TimeLineItem[]>(generateTimelineItems(activities.value
 
 const activitySelectOptions = computed(() => generateActivitySelectOptions(activities.value))
 
+const timeline = ref()
+
 const goTo = (page: string): void => {
+  if (currentPage.value === PAGE_TIMELINE && page === PAGE_TIMELINE) {
+    timeline.value?.scrollToHour(new Date().getHours())
+  }
+
+  if (page !== PAGE_TIMELINE) {
+    document.body.scrollIntoView({
+      behavior: 'auto',
+      block: 'start',
+    })
+  }
+
   currentPage.value = page
 }
 
@@ -75,6 +88,7 @@ const setSecondsToComplete = (
       :current-page="currentPage"
       :activity-select-options="activitySelectOptions"
       :activities="activities"
+      ref="timeline"
       @set-timeline-item-activity="setTimelineItemActivity"
     />
     <TheActivities
