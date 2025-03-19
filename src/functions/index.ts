@@ -22,8 +22,10 @@ export const normalizePageHash = (): string => {
 export const generateTimelineItems = (activities: Activity[]): TimeLineItem[] => {
   return [...Array(HOURS_IN_DAY).keys()].map((hour) => ({
     hour,
-    activityId: hour % 4 === 0 ? null : activities[hour % 2].id,
-    activitySeconds: hour % 4 === 0 ? 0 : (15 * SECONDS_IN_MINUTE * hour) % SECONDS_IN_HOUR,
+    activityId: [0, 1, 2, 3, 4].includes(hour) ? activities[hour % 3].id : null,
+    activitySeconds: [0, 1, 2, 3, 4].includes(hour) ? hour * 600 : 0,
+    // activityId: hour % 4 === 0 ? null : activities[hour % 2].id,
+    // activitySeconds: hour % 4 === 0 ? 0 : (15 * SECONDS_IN_MINUTE * hour) % SECONDS_IN_HOUR,
   }))
 }
 
@@ -72,4 +74,13 @@ export const formatSecond = (second: number) => {
   //return utc.substring(utc.indexOf(':') - 2, utc.length - 3)
 
   return utc.substring(utc.indexOf(':') - 2, utc.indexOf(':') + 6)
+}
+
+export const getTotalActivitySeconds = (
+  activity: Activity,
+  timelineItems: TimeLineItem[],
+): number => {
+  return timelineItems
+    .filter((item) => item.activityId === activity.id)
+    .reduce((totalSeconds, item) => Math.round(item.activitySeconds + totalSeconds), 0)
 }

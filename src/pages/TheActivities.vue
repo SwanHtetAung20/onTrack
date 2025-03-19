@@ -1,15 +1,20 @@
 <script setup lang="ts">
 import ActivityItems from '@/components/ActivityItems.vue'
-import { isActivityItemsValid, isActivityItemValid } from '@/validator'
+import { isActivityItemsValid, isActivityItemValid, validateTimelineItems } from '@/validator'
 import TheActivityForm from '@/components/TheActivityForm.vue'
 import TheActivitiesEmptyStage from '@/components/TheActivitiesEmptyStage.vue'
-import type { Activity } from '@/constants'
+import type { Activity, TimeLineItem } from '@/constants'
 
 defineProps({
   activities: {
     type: Array as () => Activity[],
     default: () => [],
     validator: isActivityItemsValid,
+  },
+  timelineItems: {
+    type: Array as () => TimeLineItem[],
+    default: () => [],
+    validator: validateTimelineItems,
   },
 })
 
@@ -40,6 +45,7 @@ const createActivity = (name: string) => {
         v-for="activity in activities"
         :key="activity.id"
         :activity="activity"
+        :timeline-items="timelineItems"
         @delete="emit('deleteActivity', activity)"
         @set-seconds-to-complete="emit('setSecondsToComplete', activity, $event)"
       />
