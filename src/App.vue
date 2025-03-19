@@ -72,6 +72,7 @@ const setSecondsToComplete = (
     <TheTimeLine
       v-show="currentPage === PAGE_TIMELINE"
       :timeline-items="timelineItems"
+      :current-page="currentPage"
       :activity-select-options="activitySelectOptions"
       :activities="activities"
       @set-timeline-item-activity="setTimelineItemActivity"

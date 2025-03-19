@@ -33,6 +33,9 @@ const emit = defineEmits({
   selectActivity(value: Activity | null) {
     return isActivity(value) || value === null
   },
+  scrollToHour(hour: number) {
+    return typeof hour === 'number'
+  },
 })
 
 const selectActivity = (activityId: string | null | number): void => {
@@ -44,7 +47,10 @@ const selectActivity = (activityId: string | null | number): void => {
 
 <template>
   <li class="relative flex flex-col gap-2 border-t border-gray-200 py-10 px-4">
-    <TimelineHour :hour="timelineItem.hour" />
+    <TimelineHour
+      :hour="timelineItem.hour"
+      @click.prevent="emit('scrollToHour', timelineItem.hour)"
+    />
     <BaseSelect
       :options="activitySelectOptions"
       placeholder="Rest"
