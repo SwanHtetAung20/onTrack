@@ -48,7 +48,7 @@ export const id = (): string => {
 
 export const generatePeriodSelection = (periodInMinutes: Array<number>) => {
   return periodInMinutes.map((periodInMinute) => ({
-    value: periodInMinute * SECONDS_IN_HOUR,
+    value: periodInMinute * SECONDS_IN_MINUTE,
     label: generatePeriodSelectionLabel(periodInMinute),
   }))
 }
@@ -69,6 +69,7 @@ export const formatSecond = (second: number) => {
   const utc = date.toUTCString()
 
   // *  utc = "Thu, 01 Jan 1970 00:01:00 GMT"
+  //return utc.substring(utc.indexOf(':') - 2, utc.length - 3)
 
   return utc.substring(utc.indexOf(':') - 2, utc.indexOf(':') + 6)
 }
