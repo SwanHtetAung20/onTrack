@@ -1,33 +1,23 @@
 <script setup lang="ts">
 import { type TimeLineItem, type Activity } from '@/constants'
 import BaseSelect from './BaseSelect.vue'
-import {
-  isActivity,
-  isActivityItemsValid,
-  isTimelineItemValid,
-  validateSelectOptions,
-} from '@/validator'
-import { toRaw } from 'vue'
+import { isActivity, isTimelineItemValid } from '@/validator'
+import { inject, toRaw } from 'vue'
 import TimelineHour from './TimelineHour.vue'
 import TimelineStopWatch from './TimelineStopWatch.vue'
 
-const props = defineProps({
+defineProps({
   timelineItem: {
     type: Object as () => TimeLineItem,
     default: () => ({ hour: 0 }),
     validator: isTimelineItemValid,
   },
-  activitySelectOptions: {
-    type: Array as () => Array<{ value: number | string; label: string }>,
-    default: () => [],
-    validator: validateSelectOptions,
-  },
-  activities: {
-    type: Array as () => Activity[],
-    required: true,
-    validator: isActivityItemsValid,
-  },
 })
+
+const activitySelectOptions = inject<Array<{ value: number | string; label: string }>>(
+  'activitySelectOptions',
+  [],
+)
 
 const emit = defineEmits({
   selectActivity(value: Activity | null) {
@@ -38,8 +28,10 @@ const emit = defineEmits({
   },
 })
 
+const activities = inject<Activity[]>('activities', [])
+
 const selectActivity = (activityId: string | null | number): void => {
-  const activity = props.activities.find((activity) => activity.id === activityId) || null
+  const activity = activities.find((activity) => activity.id === activityId) || null
   const rawActivity = activity ? toRaw(activity) : null
   emit('selectActivity', rawActivity)
 }
