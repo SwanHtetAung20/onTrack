@@ -1,4 +1,3 @@
-import { generatePeriodSelection } from '@/functions'
 import { ClockIcon, ListBulletIcon, ChartBarIcon } from '@heroicons/vue/24/solid'
 
 export const PAGE_TIMELINE = 'timeline'
@@ -41,9 +40,3 @@ export interface Activity {
   name: string
   secondsToComplete: number
 }
-
-const PERIOD_IN_MINUTES = [
-  15, 30, 45, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390, 420, 450, 480,
-]
-
-export const PERIOD_SELECT_OPTIONS = generatePeriodSelection(PERIOD_IN_MINUTES as Array<number>)

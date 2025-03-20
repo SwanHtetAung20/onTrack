@@ -3,8 +3,9 @@ import BaseButton from './BaseButton.vue'
 import { TrashIcon } from '@heroicons/vue/24/solid'
 import BaseSelect from './BaseSelect.vue'
 import { isActivityItemValid } from '@/validator'
-import { BUTTON_TYPE_DANGER, PERIOD_SELECT_OPTIONS, type Activity } from '@/constants'
+import { BUTTON_TYPE_DANGER, type Activity } from '@/constants'
 import ActivitySecondsToComplete from './ActivitySecondsToComplete.vue'
+import { inject } from 'vue'
 
 defineProps({
   activity: {
@@ -22,6 +23,8 @@ const emit = defineEmits({
     return typeof value === 'number' || value === null || typeof value === 'string'
   },
 })
+
+const periodSelection = inject<Array<{ value: number; label: string }>>('periodSelection', [])
 </script>
 
 <template>
@@ -36,7 +39,7 @@ const emit = defineEmits({
       <BaseSelect
         class="font-mono grow"
         placeholder="hh:mm"
-        :options="PERIOD_SELECT_OPTIONS"
+        :options="periodSelection"
         :selected="activity.secondsToComplete || null"
         @select="emit('setSecondsToComplete', $event || 0)"
       />

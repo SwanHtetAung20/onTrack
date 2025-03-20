@@ -18,6 +18,7 @@ import {
   generateActivitySelectOptions,
   generateActivities,
   id,
+  generatePeriodSelection,
 } from './functions'
 
 const currentPage = ref<string>(normalizePageHash())
@@ -89,6 +90,8 @@ provide('timelineItems', timelineItems.value)
 provide('activities', activities.value)
 
 provide('activitySelectOptions', activitySelectOptions.value)
+
+provide('periodSelection', generatePeriodSelection())
 </script>
 
 <template>

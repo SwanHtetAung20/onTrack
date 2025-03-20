@@ -48,14 +48,17 @@ export const id = (): string => {
   return Date.now().toString(36) + Math.random().toString(36).substring(2)
 }
 
-export const generatePeriodSelection = (periodInMinutes: Array<number>) => {
+export const generatePeriodSelection = () => {
+  const periodInMinutes = [
+    15, 30, 45, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390, 420, 450, 480,
+  ]
   return periodInMinutes.map((periodInMinute) => ({
     value: periodInMinute * SECONDS_IN_MINUTE,
     label: generatePeriodSelectionLabel(periodInMinute),
   }))
 }
 
-const generatePeriodSelectionLabel = (periodInMinute: number) => {
+const generatePeriodSelectionLabel = (periodInMinute: number): string => {
   const hours = Math.floor(periodInMinute / MINUTES_IN_HOUR)
     .toString()
     .padStart(2, '0')
