@@ -1,37 +1,40 @@
 <script setup lang="ts">
 import { ArrowPathIcon, PauseIcon, PlayIcon } from '@heroicons/vue/24/solid'
 import BaseButton from './BaseButton.vue'
-import { BUTTON_TYPE_SUCCESS, BUTTON_TYPE_WARNING, BUTTON_TYPE_DANGER } from '@/constants'
+import {
+  BUTTON_TYPE_SUCCESS,
+  BUTTON_TYPE_WARNING,
+  BUTTON_TYPE_DANGER,
+  type TimeLineItem,
+} from '@/constants'
 import { formatSecond } from '@/functions'
-import { ref } from 'vue'
+import { isTimelineItemValid } from '@/validator'
+import { inject, ref } from 'vue'
 
 const props = defineProps({
-  seconds: {
-    type: Number,
-    default: 0,
-    validator: (value: number) => value >= 0,
-  },
-  hour: {
-    type: Number,
+  timelineItem: {
+    type: Object as () => TimeLineItem,
     required: true,
-    validator: (value: number) => value >= 0,
+    validator: isTimelineItemValid,
   },
 })
 
-const seconds = ref<number>(props.seconds)
+const seconds = ref<number>(props.timelineItem.activitySeconds)
 const isRunning = ref<boolean>(false)
 const intervalId = ref<number | undefined>(undefined)
 
-const isStartButtonDisabled = props.hour !== new Date().getHours()
+const isStartButtonDisabled = props.timelineItem.hour !== new Date().getHours()
 
-const emit = defineEmits({
-  updateSeconds: (value: number) => typeof value === 'number',
-})
+const updateTimelineItemActivitySeconds = inject<
+  (timelineItem: TimeLineItem, seconds: number) => void
+>('updateTimelineItemActivitySeconds')
 
 const start = () => {
   intervalId.value = setInterval(() => {
     seconds.value++
-    emit('updateSeconds', 1)
+    if (updateTimelineItemActivitySeconds) {
+      updateTimelineItemActivitySeconds(props.timelineItem, 1)
+    }
   }, 1000) as unknown as number
   isRunning.value = true
 }
@@ -43,7 +46,9 @@ const pause = () => {
 
 const reset = () => {
   pause()
-  emit('updateSeconds', -seconds.value)
+  if (updateTimelineItemActivitySeconds) {
+    updateTimelineItemActivitySeconds(props.timelineItem, -seconds.value)
+  }
   seconds.value = 0
 }
 </script>

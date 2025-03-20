@@ -4,7 +4,7 @@ import TheNav from './components/TheNav.vue'
 import TheActivities from './pages/TheActivities.vue'
 import TheProgress from './pages/TheProgress.vue'
 import TheTimeLine from './pages/TheTimeLine.vue'
-import { ref, computed } from 'vue'
+import { ref, computed, provide } from 'vue'
 import {
   PAGE_ACTIVITIES,
   PAGE_PROGRESS,
@@ -81,6 +81,8 @@ const setSecondsToComplete = (
 const updateTimelineItemActivitySeconds = (timelineItem: TimeLineItem, seconds: number): void => {
   timelineItem.activitySeconds += seconds
 }
+
+provide('updateTimelineItemActivitySeconds', updateTimelineItemActivitySeconds)
 </script>
 
 <template>
@@ -94,7 +96,6 @@ const updateTimelineItemActivitySeconds = (timelineItem: TimeLineItem, seconds: 
       :activities="activities"
       ref="timeline"
       @set-timeline-item-activity="setTimelineItemActivity"
-      @update-timeline-item-activity-seconds="updateTimelineItemActivitySeconds"
     />
     <TheActivities
       v-show="currentPage === PAGE_ACTIVITIES"
