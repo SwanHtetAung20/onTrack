@@ -3,41 +3,29 @@ import TimelineItem from '@/components/TimelineItem.vue'
 import { type TimeLineItem, MIDNIGHT_HOUR, PAGE_TIMELINE } from '@/constants'
 import { validateTimelineItems } from '@/validator'
 import { ref, nextTick, type ComponentPublicInstance, watchPostEffect } from 'vue'
-const props = defineProps({
+import { currentPage } from '@/router'
+defineProps({
   timelineItems: {
     type: Array as () => TimeLineItem[],
     default: () => [],
     validator: validateTimelineItems,
-  },
-  currentPage: {
-    type: String,
-    required: true,
-    validator(value: string) {
-      return typeof value === 'string'
-    },
   },
 })
 
 const timelineItemsRef = ref<ComponentPublicInstance[]>([])
 
 const scrollToHour = (hour: number) => {
-  if (hour === MIDNIGHT_HOUR) {
-    document.body.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    })
-  } else {
-    timelineItemsRef.value[hour - 1].$el.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    })
-  }
+  const el = hour === MIDNIGHT_HOUR ? document.body : timelineItemsRef.value[hour - 1].$el
+  el.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start',
+  })
 }
 
 defineExpose({ scrollToHour })
 
 watchPostEffect(async () => {
-  if (props.currentPage === PAGE_TIMELINE) {
+  if (currentPage.value === PAGE_TIMELINE) {
     await nextTick()
 
     scrollToHour(new Date().getHours())

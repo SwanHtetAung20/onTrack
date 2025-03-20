@@ -1,6 +1,4 @@
-import { isPageValid } from '@/validator'
 import {
-  PAGE_TIMELINE,
   HOURS_IN_DAY,
   SECONDS_IN_MINUTE,
   type Activity,
@@ -9,15 +7,6 @@ import {
   MINUTES_IN_HOUR,
   MILLISECONDS_IN_SECOND,
 } from '../constants'
-
-export const normalizePageHash = (): string => {
-  const page = window.location.hash.slice(1)
-  if (isPageValid(page)) {
-    return page
-  }
-  window.location.hash = PAGE_TIMELINE
-  return PAGE_TIMELINE
-}
 
 export const generateTimelineItems = (activities: Activity[]): TimeLineItem[] => {
   return [...Array(HOURS_IN_DAY).keys()].map((hour) => ({

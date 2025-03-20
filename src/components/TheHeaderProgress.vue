@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { CheckCircleIcon } from '@heroicons/vue/24/solid'
 import { PAGE_PROGRESS } from '@/constants'
+import { navigate } from '@/router'
 </script>
 
 <template>
-  <a :href="`#${PAGE_PROGRESS}`">
+  <a :href="`#${PAGE_PROGRESS}`" @click="navigate(PAGE_PROGRESS)">
     <div v-if="true" class="flex items-center gap-1">
       Day Completed
 

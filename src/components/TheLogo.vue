@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { PAGE_TIMELINE } from '@/constants'
+import { navigate } from '@/router'
 </script>
 
 <template>
-  <a :href="`#${PAGE_TIMELINE}`">
+  <a :href="`#${PAGE_TIMELINE}`" @click="navigate(PAGE_TIMELINE)">
     <img
       src="https://img-c.udemycdn.com/course/750x422/5157066_66bb.jpg"
       alt="Logo"
