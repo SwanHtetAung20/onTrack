@@ -65,7 +65,7 @@ provide('updateTimelineItemActivitySeconds', updateTimelineItemActivitySeconds)
 
 provide('timelineItems', timelineItems.value)
 
-provide('activitySelectOptions', activitySelectOptions.value)
+provide('activitySelectOptions', activitySelectOptions)
 
 provide('periodSelection', generatePeriodSelection())
 
