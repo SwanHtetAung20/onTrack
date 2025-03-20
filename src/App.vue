@@ -68,8 +68,8 @@ const createActivity = (name: string): void => {
   })
 }
 
-const setTimelineItemActivity = (timelineItem: TimeLineItem, activity: Activity | null): void => {
-  timelineItem.activityId = activity?.id || null
+const setTimelineItemActivity = (timelineItem: TimeLineItem, activityId: string | null): void => {
+  timelineItem.activityId = activityId
 }
 
 const setSecondsToComplete = (
@@ -87,11 +87,11 @@ provide('updateTimelineItemActivitySeconds', updateTimelineItemActivitySeconds)
 
 provide('timelineItems', timelineItems.value)
 
-provide('activities', activities.value)
-
 provide('activitySelectOptions', activitySelectOptions.value)
 
 provide('periodSelection', generatePeriodSelection())
+
+provide('setTimelineItemActivity', setTimelineItemActivity)
 </script>
 
 <template>
@@ -102,7 +102,6 @@ provide('periodSelection', generatePeriodSelection())
       :timeline-items="timelineItems"
       :current-page="currentPage"
       ref="timeline"
-      @set-timeline-item-activity="setTimelineItemActivity"
     />
     <TheActivities
       v-show="currentPage === PAGE_ACTIVITIES"

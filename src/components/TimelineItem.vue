@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { type TimeLineItem, type Activity } from '@/constants'
+import { type TimeLineItem } from '@/constants'
 import BaseSelect from './BaseSelect.vue'
-import { isActivity, isTimelineItemValid } from '@/validator'
-import { inject, toRaw } from 'vue'
+import { isTimelineItemValid } from '@/validator'
+import { inject } from 'vue'
 import TimelineHour from './TimelineHour.vue'
 import TimelineStopWatch from './TimelineStopWatch.vue'
 
@@ -19,21 +19,18 @@ const activitySelectOptions = inject<Array<{ value: number | string; label: stri
   [],
 )
 
+const setTimelineItemActivity = inject<
+  (timelineItem: TimeLineItem, activityId: string | null) => void
+>('setTimelineItemActivity', () => {})
+
 const emit = defineEmits({
-  selectActivity(value: Activity | null) {
-    return isActivity(value) || value === null
-  },
   scrollToHour(hour: number) {
     return typeof hour === 'number'
   },
 })
 
-const activities = inject<Activity[]>('activities', [])
-
-const selectActivity = (activityId: string | null | number): void => {
-  const activity = activities.find((activity) => activity.id === activityId) || null
-  const rawActivity = activity ? toRaw(activity) : null
-  emit('selectActivity', rawActivity)
+const selectActivity = (timelineItem: TimeLineItem, activityId: string | number | null): void => {
+  setTimelineItemActivity(timelineItem, activityId ? activityId.toString() : null)
 }
 </script>
 
@@ -47,7 +44,7 @@ const selectActivity = (activityId: string | null | number): void => {
       :options="activitySelectOptions"
       placeholder="Rest"
       :selected="timelineItem.activityId"
-      @select="selectActivity"
+      @select="selectActivity(timelineItem, $event)"
     />
     <TimelineStopWatch :timeline-item="timelineItem" />
   </li>
