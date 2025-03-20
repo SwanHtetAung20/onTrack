@@ -25,6 +25,10 @@ const emit = defineEmits({
 })
 
 const periodSelection = inject<Array<{ value: number; label: string }>>('periodSelection', [])
+const setSecondsToComplete = inject<(activity: Activity, secondsToComplete: number) => void>(
+  'setSecondsToComplete',
+  () => {},
+)
 </script>
 
 <template>
@@ -41,7 +45,7 @@ const periodSelection = inject<Array<{ value: number; label: string }>>('periodS
         placeholder="hh:mm"
         :options="periodSelection"
         :selected="activity.secondsToComplete || null"
-        @select="emit('setSecondsToComplete', $event || 0)"
+        @select="setSecondsToComplete(activity, Number($event) || 0)"
       />
       <ActivitySecondsToComplete v-if="activity.secondsToComplete" :activity="activity" />
     </div>

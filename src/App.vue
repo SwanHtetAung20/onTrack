@@ -72,11 +72,8 @@ const setTimelineItemActivity = (timelineItem: TimeLineItem, activityId: string 
   timelineItem.activityId = activityId
 }
 
-const setSecondsToComplete = (
-  activity: Activity,
-  secondsToComplete: number | null | string,
-): void => {
-  activity.secondsToComplete = Number(secondsToComplete) || 0
+const setSecondsToComplete = (activity: Activity, secondsToComplete: number): void => {
+  activity.secondsToComplete = secondsToComplete || 0
 }
 
 const updateTimelineItemActivitySeconds = (timelineItem: TimeLineItem, seconds: number): void => {
@@ -92,6 +89,8 @@ provide('activitySelectOptions', activitySelectOptions.value)
 provide('periodSelection', generatePeriodSelection())
 
 provide('setTimelineItemActivity', setTimelineItemActivity)
+
+provide('setSecondsToComplete', setSecondsToComplete)
 </script>
 
 <template>
@@ -108,7 +107,6 @@ provide('setTimelineItemActivity', setTimelineItemActivity)
       :activities="activities"
       @delete-activity="deleteActivityItem"
       @create-activity="createActivity"
-      @set-seconds-to-complete="setSecondsToComplete"
     />
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
   </main>
