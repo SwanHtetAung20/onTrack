@@ -6,9 +6,14 @@ import {
   BUTTON_TYPES,
   type Activity,
 } from '@/constants'
+import type { FunctionalComponent } from 'vue'
 
 export const isPageValid = (page: string): boolean => {
-  return Object.keys(NAV_ITEMS).includes(page)
+  return NAV_ITEMS.some((navItem) => navItem.page === page)
+}
+
+export const isNavItemValid = (navItem: { page: string; icon: FunctionalComponent }): boolean => {
+  return NAV_ITEMS.includes(navItem)
 }
 
 export const validateTimelineItems = (timelineItems: TimeLineItem[]) => {
