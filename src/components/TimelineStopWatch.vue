@@ -61,10 +61,10 @@ const reset = () => {
     <div class="flex flex-grow items-center rounded font-mono text-3xl bg-gray-100 px-2">
       {{ formatSecond(seconds) }}
     </div>
-    <BaseButton v-if="isRunning" :type="BUTTON_TYPE_SUCCESS" @click="pause">
+    <BaseButton v-if="isRunning" :type="BUTTON_TYPE_WARNING" @click="pause">
       <PauseIcon class="h-8" />
     </BaseButton>
-    <BaseButton v-else :type="BUTTON_TYPE_WARNING" @click="start" :disabled="isStartButtonDisabled">
+    <BaseButton v-else :type="BUTTON_TYPE_SUCCESS" @click="start" :disabled="isStartButtonDisabled">
       <PlayIcon class="h-8" />
     </BaseButton>
   </div>

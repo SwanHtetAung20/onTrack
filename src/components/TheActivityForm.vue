@@ -2,18 +2,14 @@
 import BaseButton from './BaseButton.vue'
 import { PlusIcon } from '@heroicons/vue/24/solid'
 import { BUTTON_TYPE_PRIMARY } from '@/constants'
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, inject } from 'vue'
 
 const activity = ref<string>('')
 
-const emit = defineEmits({
-  submit(activity: string) {
-    return typeof activity === 'string'
-  },
-})
+const createActivity = inject<(activityName: string) => void>('createActivity')
 
 const submit = async () => {
-  emit('submit', activity.value)
+  if (createActivity) createActivity(activity.value)
   activity.value = ''
   await nextTick()
 

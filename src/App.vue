@@ -91,6 +91,10 @@ provide('periodSelection', generatePeriodSelection())
 provide('setTimelineItemActivity', setTimelineItemActivity)
 
 provide('setSecondsToComplete', setSecondsToComplete)
+
+provide('createActivity', createActivity)
+
+provide('deleteActivityItem', deleteActivityItem)
 </script>
 
 <template>
@@ -102,12 +106,7 @@ provide('setSecondsToComplete', setSecondsToComplete)
       :current-page="currentPage"
       ref="timeline"
     />
-    <TheActivities
-      v-show="currentPage === PAGE_ACTIVITIES"
-      :activities="activities"
-      @delete-activity="deleteActivityItem"
-      @create-activity="createActivity"
-    />
+    <TheActivities v-show="currentPage === PAGE_ACTIVITIES" :activities="activities" />
     <TheProgress v-show="currentPage === PAGE_PROGRESS" />
   </main>
   <TheNav :current-page="currentPage" @navigate="goTo($event)" />
