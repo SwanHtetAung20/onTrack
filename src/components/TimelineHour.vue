@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { currentHour } from '@/functions'
+
 const props = defineProps({
   hour: {
     type: Number,
@@ -8,7 +10,7 @@ const props = defineProps({
 
 const classes = [
   'absolute -top-4 left-1/2 -translate-x-1/2 font-mono rounded px-2 text-xl cursor-pointer',
-  props.hour === new Date().getHours()
+  props.hour === currentHour()
     ? 'bg-purple-900 font-black text-white'
     : 'bg-gray-100 text-gray-500',
 ]

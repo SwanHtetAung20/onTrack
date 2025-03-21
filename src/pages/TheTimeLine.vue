@@ -1,27 +1,19 @@
 <script setup lang="ts">
 import TimelineItem from '@/components/TimelineItem.vue'
-import { MIDNIGHT_HOUR, PAGE_TIMELINE } from '@/constants'
-import { ref, nextTick, type ComponentPublicInstance, watchPostEffect } from 'vue'
+import { PAGE_TIMELINE } from '@/constants'
+import { nextTick, watchPostEffect } from 'vue'
 import { currentPage } from '@/router'
-import { timelineItems } from '@/timeline-items'
-
-const timelineItemsRef = ref<ComponentPublicInstance[]>([])
-
-const scrollToHour = (hour: number) => {
-  const el = hour === MIDNIGHT_HOUR ? document.body : timelineItemsRef.value[hour - 1].$el
-  el.scrollIntoView({
-    behavior: 'smooth',
-    block: 'start',
-  })
-}
-
-defineExpose({ scrollToHour })
+import {
+  timelineItems,
+  scrollToHour,
+  timelineItemsRef,
+  scrollToCurrentHour,
+} from '@/timeline-items'
 
 watchPostEffect(async () => {
   if (currentPage.value === PAGE_TIMELINE) {
     await nextTick()
-
-    scrollToHour(new Date().getHours())
+    scrollToCurrentHour()
   }
 })
 </script>
@@ -33,8 +25,8 @@ watchPostEffect(async () => {
         v-for="timelineItem in timelineItems"
         :key="timelineItem.hour"
         :timeline-item="timelineItem"
-        ref="timelineItemsRef"
         @scroll-to-hour="scrollToHour(timelineItem.hour)"
+        ref="timelineItemsRef"
       />
     </ul>
   </div>

@@ -1,6 +1,7 @@
-import { ref } from 'vue'
+import { ref, type ComponentPublicInstance } from 'vue'
 import { activities } from '@/activity'
-import { HOURS_IN_DAY, type Activity, type TimeLineItem } from '@/constants'
+import { HOURS_IN_DAY, type Activity, type TimeLineItem, MIDNIGHT_HOUR } from '@/constants'
+import { currentHour } from '@/functions'
 
 const generateTimelineItems = (): TimeLineItem[] => {
   return [...Array(HOURS_IN_DAY).keys()].map((hour) => ({
@@ -13,6 +14,7 @@ const generateTimelineItems = (): TimeLineItem[] => {
 }
 
 export const timelineItems = ref<TimeLineItem[]>(generateTimelineItems())
+export const timelineItemsRef = ref<ComponentPublicInstance[]>([])
 
 export const updateTimelineItem = (
   timelineItem: TimeLineItem,
@@ -39,4 +41,16 @@ export const getTotalActivitySeconds = (activity: Activity): number => {
   return timelineItems.value
     .filter((item) => hasActivity(item, activity))
     .reduce((totalSeconds, item) => Math.round(item.activitySeconds + totalSeconds), 0)
+}
+
+export const scrollToHour = (hour: number) => {
+  const el = hour === MIDNIGHT_HOUR ? document.body : timelineItemsRef.value[hour - 1].$el
+  el.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start',
+  })
+}
+
+export const scrollToCurrentHour = () => {
+  scrollToHour(currentHour())
 }
