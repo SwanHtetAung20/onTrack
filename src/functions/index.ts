@@ -1,37 +1,10 @@
 import {
-  HOURS_IN_DAY,
   SECONDS_IN_MINUTE,
   type Activity,
-  SECONDS_IN_HOUR,
   type TimeLineItem,
   MINUTES_IN_HOUR,
   MILLISECONDS_IN_SECOND,
 } from '../constants'
-
-export const generateTimelineItems = (activities: Activity[]): TimeLineItem[] => {
-  return [...Array(HOURS_IN_DAY).keys()].map((hour) => ({
-    hour,
-    activityId: [0, 1, 2, 3, 4].includes(hour) ? activities[hour % 3].id : null,
-    activitySeconds: [0, 1, 2, 3, 4].includes(hour) ? hour * 600 : 0,
-    // activityId: hour % 4 === 0 ? null : activities[hour % 2].id,
-    // activitySeconds: hour % 4 === 0 ? 0 : (15 * SECONDS_IN_MINUTE * hour) % SECONDS_IN_HOUR,
-  }))
-}
-
-export const generateActivitySelectOptions = (activities: Activity[]) => {
-  return activities.map((activity) => ({
-    value: activity.id,
-    label: activity.name,
-  }))
-}
-
-export const generateActivities = (): Activity[] => {
-  return ['Reading', 'Training', 'Coding'].map((name, index) => ({
-    id: id(),
-    name,
-    secondsToComplete: index * SECONDS_IN_HOUR,
-  }))
-}
 
 export const id = (): string => {
   return Date.now().toString(36) + Math.random().toString(36).substring(2)
