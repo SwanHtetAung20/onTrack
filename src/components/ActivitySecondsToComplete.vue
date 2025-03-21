@@ -3,6 +3,7 @@ import { formatSecond, getTotalActivitySeconds } from '@/functions'
 import type { Activity, TimeLineItem } from '@/constants'
 import { isActivityItemValid } from '@/validator'
 import { computed, inject } from 'vue'
+import { timelineItemsKey } from '@/key'
 
 const props = defineProps({
   activity: {
@@ -12,7 +13,7 @@ const props = defineProps({
   },
 })
 
-const timelineItems = inject<TimeLineItem[]>('timelineItems', [])
+const timelineItems = inject<TimeLineItem[]>(timelineItemsKey, [])
 
 const secondsDiff = computed(
   () => getTotalActivitySeconds(props.activity, timelineItems) - props.activity.secondsToComplete,

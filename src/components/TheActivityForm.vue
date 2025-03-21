@@ -3,10 +3,11 @@ import BaseButton from './BaseButton.vue'
 import { PlusIcon } from '@heroicons/vue/24/solid'
 import { BUTTON_TYPE_PRIMARY } from '@/constants'
 import { ref, nextTick, inject } from 'vue'
+import { createActivityKey } from '@/key'
 
 const activity = ref<string>('')
 
-const createActivity = inject<(activityName: string) => void>('createActivity')
+const createActivity = inject<(activityName: string) => void>(createActivityKey)
 
 const submit = async () => {
   if (createActivity) createActivity(activity.value)
