@@ -41,7 +41,7 @@ watchPostEffect(async () => {
         :key="timelineItem.hour"
         :timeline-item="timelineItem"
         ref="timelineItemsRef"
-        @scroll-to-hour="scrollToHour"
+        @scroll-to-hour="scrollToHour(timelineItem.hour)"
       />
     </ul>
   </div>

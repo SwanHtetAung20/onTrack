@@ -76,3 +76,7 @@ export const getTotalActivitySeconds = (
     .filter((item) => item.activityId === activity.id)
     .reduce((totalSeconds, item) => Math.round(item.activitySeconds + totalSeconds), 0)
 }
+
+export const currentHour = (): number => {
+  return new Date().getHours()
+}

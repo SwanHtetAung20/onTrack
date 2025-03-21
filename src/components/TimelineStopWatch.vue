@@ -7,7 +7,7 @@ import {
   BUTTON_TYPE_DANGER,
   type TimeLineItem,
 } from '@/constants'
-import { formatSecond } from '@/functions'
+import { formatSecond, currentHour } from '@/functions'
 import { isTimelineItemValid } from '@/validator'
 import { inject, ref } from 'vue'
 import { updateTimelineItemActivitySecondsKey } from '@/key'
@@ -24,7 +24,7 @@ const seconds = ref<number>(props.timelineItem.activitySeconds)
 const isRunning = ref<boolean>(false)
 const intervalId = ref<number | undefined>(undefined)
 
-const isStartButtonDisabled = props.timelineItem.hour !== new Date().getHours()
+const isStartButtonDisabled = props.timelineItem.hour !== currentHour()
 
 const updateTimelineItemActivitySeconds = inject<
   (timelineItem: TimeLineItem, seconds: number) => void

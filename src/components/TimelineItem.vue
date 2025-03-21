@@ -25,9 +25,7 @@ const setTimelineItemActivity = inject<
 >(setTimelineItemActivityKey, () => {})
 
 const emit = defineEmits({
-  scrollToHour(hour: number) {
-    return typeof hour === 'number'
-  },
+  scrollToHour: null,
 })
 
 const selectActivity = (timelineItem: TimeLineItem, activityId: string | number | null): void => {
@@ -37,10 +35,7 @@ const selectActivity = (timelineItem: TimeLineItem, activityId: string | number 
 
 <template>
   <li class="relative flex flex-col gap-2 border-t border-gray-200 py-10 px-4">
-    <TimelineHour
-      :hour="timelineItem.hour"
-      @click.prevent="emit('scrollToHour', timelineItem.hour)"
-    />
+    <TimelineHour :hour="timelineItem.hour" @click.prevent="emit('scrollToHour')" />
     <BaseSelect
       :options="activitySelectOptions"
       placeholder="Rest"
