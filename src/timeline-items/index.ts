@@ -14,31 +14,29 @@ const generateTimelineItems = (): TimeLineItem[] => {
 
 export const timelineItems = ref<TimeLineItem[]>(generateTimelineItems())
 
-export const setTimelineItemActivity = (
+export const updateTimelineItem = (
   timelineItem: TimeLineItem,
-  activityId: string | null,
+  fields: Partial<TimeLineItem>,
 ): void => {
-  timelineItem.activityId = activityId
+  Object.assign(timelineItem, fields)
 }
 
-export const updateTimelineItemActivitySeconds = (
-  timelineItem: TimeLineItem,
-  seconds: number,
-): void => {
-  timelineItem.activitySeconds = seconds
+const hasActivity = (timelineItem: TimeLineItem, activity: Activity): boolean => {
+  return timelineItem.activityId === activity.id
 }
-
 export const resetTimelineActivity = (activity: Activity): void => {
-  timelineItems.value.forEach((timelineItem: TimeLineItem) => {
-    if (timelineItem.activityId === activity.id) {
-      timelineItem.activityId = null
-      timelineItem.activitySeconds = 0
-    }
-  })
+  timelineItems.value
+    .filter((item: TimeLineItem) => hasActivity(item, activity))
+    .forEach((timelineItem: TimeLineItem) =>
+      updateTimelineItem(timelineItem, {
+        activityId: null,
+        activitySeconds: 0,
+      }),
+    )
 }
 
 export const getTotalActivitySeconds = (activity: Activity): number => {
   return timelineItems.value
-    .filter((item) => item.activityId === activity.id)
+    .filter((item) => hasActivity(item, activity))
     .reduce((totalSeconds, item) => Math.round(item.activitySeconds + totalSeconds), 0)
 }
