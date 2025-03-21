@@ -1,16 +1,9 @@
 <script setup lang="ts">
 import TimelineItem from '@/components/TimelineItem.vue'
-import { type TimeLineItem, MIDNIGHT_HOUR, PAGE_TIMELINE } from '@/constants'
-import { validateTimelineItems } from '@/validator'
+import { MIDNIGHT_HOUR, PAGE_TIMELINE } from '@/constants'
 import { ref, nextTick, type ComponentPublicInstance, watchPostEffect } from 'vue'
 import { currentPage } from '@/router'
-defineProps({
-  timelineItems: {
-    type: Array as () => TimeLineItem[],
-    default: () => [],
-    validator: validateTimelineItems,
-  },
-})
+import { timelineItems } from '@/timeline-items'
 
 const timelineItemsRef = ref<ComponentPublicInstance[]>([])
 

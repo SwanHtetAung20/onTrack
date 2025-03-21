@@ -1,10 +1,4 @@
-import {
-  SECONDS_IN_MINUTE,
-  type Activity,
-  type TimeLineItem,
-  MINUTES_IN_HOUR,
-  MILLISECONDS_IN_SECOND,
-} from '../constants'
+import { SECONDS_IN_MINUTE, MINUTES_IN_HOUR, MILLISECONDS_IN_SECOND } from '../constants'
 
 export const id = (): string => {
   return Date.now().toString(36) + Math.random().toString(36).substring(2)
@@ -39,15 +33,6 @@ export const formatSecond = (second: number) => {
   //return utc.substring(utc.indexOf(':') - 2, utc.length - 3)
 
   return utc.substring(utc.indexOf(':') - 2, utc.indexOf(':') + 6)
-}
-
-export const getTotalActivitySeconds = (
-  activity: Activity,
-  timelineItems: TimeLineItem[],
-): number => {
-  return timelineItems
-    .filter((item) => item.activityId === activity.id)
-    .reduce((totalSeconds, item) => Math.round(item.activitySeconds + totalSeconds), 0)
 }
 
 export const currentHour = (): number => {

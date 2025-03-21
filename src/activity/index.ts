@@ -35,3 +35,7 @@ export const createActivity = (name: string): void => {
     secondsToComplete: 0,
   })
 }
+
+export const setSecondsToComplete = (activity: Activity, secondsToComplete: number): void => {
+  activity.secondsToComplete = secondsToComplete || 0
+}

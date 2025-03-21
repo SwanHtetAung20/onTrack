@@ -36,3 +36,9 @@ export const resetTimelineActivity = (activity: Activity): void => {
     }
   })
 }
+
+export const getTotalActivitySeconds = (activity: Activity): number => {
+  return timelineItems.value
+    .filter((item) => item.activityId === activity.id)
+    .reduce((totalSeconds, item) => Math.round(item.activitySeconds + totalSeconds), 0)
+}

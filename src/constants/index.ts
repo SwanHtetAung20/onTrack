@@ -1,5 +1,6 @@
 import { ClockIcon, ListBulletIcon, ChartBarIcon } from '@heroicons/vue/24/solid'
 import type { FunctionalComponent } from 'vue'
+import { generatePeriodSelection } from '@/functions'
 
 export const PAGE_TIMELINE = 'timeline'
 export const PAGE_ACTIVITIES = 'activities'
@@ -55,3 +56,5 @@ export interface Activity {
   name: string
   secondsToComplete: number
 }
+
+export const PERIOD_SELECT_OPTIONS = generatePeriodSelection()

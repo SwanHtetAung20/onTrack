@@ -1,17 +1,8 @@
 <script setup lang="ts">
 import ActivityItems from '@/components/ActivityItems.vue'
-import { isActivityItemsValid } from '@/validator'
 import TheActivityForm from '@/components/TheActivityForm.vue'
 import TheActivitiesEmptyStage from '@/components/TheActivitiesEmptyStage.vue'
-import type { Activity } from '@/constants'
-
-defineProps({
-  activities: {
-    type: Array as () => Activity[],
-    default: () => [],
-    validator: isActivityItemsValid,
-  },
-})
+import { activities } from '@/activity'
 </script>
 
 <template>
