@@ -15,6 +15,9 @@ export const BUTTON_TYPE_NEUTRAL = 'neutral'
 export const BUTTON_TYPE_PRIMARY = 'primary'
 export const BUTTON_TYPE_SUCCESS = 'success'
 export const BUTTON_TYPE_WARNING = 'warning'
+export const LOW_PERCENTAGE = 33
+export const MEDIUM_PERCENTAGE = 66
+export const HUNDRED_PERCENTAGE = 100
 
 export const BUTTON_TYPES = [
   BUTTON_TYPE_DANGER,

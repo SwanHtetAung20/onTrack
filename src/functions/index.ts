@@ -1,4 +1,11 @@
-import { SECONDS_IN_MINUTE, MINUTES_IN_HOUR, MILLISECONDS_IN_SECOND } from '../constants'
+import {
+  SECONDS_IN_MINUTE,
+  MINUTES_IN_HOUR,
+  MILLISECONDS_IN_SECOND,
+  LOW_PERCENTAGE,
+  MEDIUM_PERCENTAGE,
+  HUNDRED_PERCENTAGE,
+} from '../constants'
 
 export const id = (): string => {
   return Date.now().toString(36) + Math.random().toString(36).substring(2)
@@ -37,4 +44,11 @@ export const formatSecond = (second: number) => {
 
 export const currentHour = (): number => {
   return new Date().getHours()
+}
+
+export const getProgressColor = (percentage: number): string => {
+  if (percentage < LOW_PERCENTAGE) return 'bg-red-500'
+  if (percentage < MEDIUM_PERCENTAGE) return 'bg-yellow-500'
+  if (percentage < HUNDRED_PERCENTAGE) return 'bg-blue-500'
+  return 'bg-green-500'
 }

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { currentHour } from '@/functions'
+import { scrollToHour } from '@/timeline-items'
 
 const props = defineProps({
   hour: {
@@ -19,5 +20,5 @@ const formattedHour = `${props.hour.toString().padStart(2, '0')}.00`
 </script>
 
 <template>
-  <a :class="classes"> {{ formattedHour }}</a>
+  <a :class="classes" @click.prevent="scrollToHour(hour)"> {{ formattedHour }}</a>
 </template>

@@ -8,14 +8,9 @@ defineProps({
     required: true,
     validator: isIconValid,
   },
-  className: {
-    type: String,
-    default: 'h-8',
-    validator: (value: string) => value.trim() !== '',
-  },
 })
 </script>
 
 <template>
-  <component :is="ICONS[name]" :class="className" />
+  <component :is="ICONS[name]" :class="$attrs.class || 'h-8'" />
 </template>
