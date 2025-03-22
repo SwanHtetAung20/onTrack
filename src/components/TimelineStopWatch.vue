@@ -29,12 +29,12 @@ const isStartButtonDisabled = props.timelineItem.hour !== currentHour()
 
 watch(
   () => props.timelineItem.activityId,
-  () => updateTimelineItem(props.timelineItem, { activitySeconds: seconds.value * 120 }),
+  () => updateTimelineItem(props.timelineItem, { activitySeconds: seconds.value }),
 )
 
 const start = () => {
   intervalId.value = setInterval(() => {
-    seconds.value++
+    seconds.value += 120
 
     updateTimelineItem(props.timelineItem, {
       activitySeconds: props.timelineItem.activitySeconds + 120,
@@ -52,7 +52,7 @@ const reset = () => {
   pause()
 
   updateTimelineItem(props.timelineItem, {
-    activitySeconds: props.timelineItem.activitySeconds - seconds.value * 120,
+    activitySeconds: props.timelineItem.activitySeconds - seconds.value,
   })
 
   seconds.value = 0

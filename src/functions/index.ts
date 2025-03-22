@@ -49,6 +49,6 @@ export const currentHour = (): number => {
 export const getProgressColor = (percentage: number): string => {
   if (percentage < LOW_PERCENTAGE) return 'bg-red-500'
   if (percentage < MEDIUM_PERCENTAGE) return 'bg-yellow-500'
-  if (percentage < HUNDRED_PERCENTAGE) return 'bg-blue-500'
+  if (percentage < HUNDRED_PERCENTAGE) return 'bg-orange-500'
   return 'bg-green-500'
 }
