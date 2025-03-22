@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { Activity } from '@/constants'
 import { isActivityItemValid } from '@/validator'
+import { getActivityProgress } from '@/activity'
+import { computed } from 'vue'
 
 const props = defineProps({
   index: {
@@ -13,8 +15,10 @@ const props = defineProps({
     validator: isActivityItemValid,
   },
 })
+
+const progress = computed(() => getActivityProgress(props.activity))
+
 const color = ['red', 'yellow', 'blue', 'green'][props.index]
-const progress = [10, 50, 70, 100][props.index]
 const timeProgress = ['03:00 / 03:30', '03:15 / 03:45', '03:20 / 04:30', '03:30 / 04:15'][
   props.index
 ]
