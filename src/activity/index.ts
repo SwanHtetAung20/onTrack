@@ -19,6 +19,10 @@ const generateActivitySelectOptions = (activities: Activity[]) => {
   }))
 }
 
+export const trackedActivities = computed(() =>
+  activities.value.filter(({ secondsToComplete }) => secondsToComplete),
+)
+
 export const activitySelectOptions = computed(() => generateActivitySelectOptions(activities.value))
 
 export const deleteActivityItem = (deleteActivity: Activity): void => {
