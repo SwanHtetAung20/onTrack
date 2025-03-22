@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { XMarkIcon } from '@heroicons/vue/24/solid'
 import BaseButton from './BaseButton.vue'
+import BaseIcon from './BaseIcon.vue'
 import { validateSelectOptions } from '@/validator'
 import { BUTTON_TYPE_NEUTRAL } from '@/constants'
+import { ICON_X_MARK } from '@/icons'
 defineProps({
   options: {
     type: Array as () => { value: number | string; label: string }[],
@@ -29,7 +30,7 @@ const emit = defineEmits({
 <template>
   <div class="flex gap-2">
     <BaseButton :type="BUTTON_TYPE_NEUTRAL" @click="emit('select', null)">
-      <XMarkIcon class="h-8" />
+      <BaseIcon :name="ICON_X_MARK" />
     </BaseButton>
     <select
       class="w-full truncate rounded bg-gray-100 py-1 px-2 text-2xl"

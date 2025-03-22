@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, type Component } from 'vue'
 import { PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_TIMELINE } from '@/constants'
 import { isPageValid } from '@/validator'
 import TheTimeLine from '@/pages/TheTimeLine.vue'
@@ -21,7 +21,7 @@ export const navigate = (page: string): void => {
   currentPage.value = page
 }
 
-export const routes: Record<string, any> = {
+export const routes: Record<string, Component> = {
   [PAGE_TIMELINE]: TheTimeLine,
   [PAGE_ACTIVITIES]: TheActivities,
   [PAGE_PROGRESS]: TheProgress,

@@ -6,13 +6,17 @@ import {
   BUTTON_TYPES,
   type Activity,
 } from '@/constants'
-import type { FunctionalComponent } from 'vue'
+import { ICONS } from '@/icons'
 
 export const isPageValid = (page: string): boolean => {
   return NAV_ITEMS.some((navItem) => navItem.page === page)
 }
 
-export const isNavItemValid = (navItem: { page: string; icon: FunctionalComponent }): boolean => {
+export const isIconValid = (icon: string): boolean => {
+  return Object.keys(ICONS).includes(icon)
+}
+
+export const isNavItemValid = (navItem: { page: string; icon: string }): boolean => {
   return NAV_ITEMS.includes(navItem)
 }
 

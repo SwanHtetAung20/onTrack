@@ -1,6 +1,5 @@
-import { ClockIcon, ListBulletIcon, ChartBarIcon } from '@heroicons/vue/24/solid'
-import type { FunctionalComponent } from 'vue'
 import { generatePeriodSelection } from '@/functions'
+import { ICON_CHART_BAR, ICON_CLOCK, ICON_LIST_BULLET } from '@/icons'
 
 export const PAGE_TIMELINE = 'timeline'
 export const PAGE_ACTIVITIES = 'activities'
@@ -27,21 +26,21 @@ export const BUTTON_TYPES = [
 
 export interface NavItem {
   page: string
-  icon: FunctionalComponent
+  icon: string
 }
 
 export const NAV_ITEMS: NavItem[] = [
   {
     page: PAGE_TIMELINE,
-    icon: ClockIcon,
+    icon: ICON_CLOCK,
   },
   {
     page: PAGE_ACTIVITIES,
-    icon: ListBulletIcon,
+    icon: ICON_LIST_BULLET,
   },
   {
     page: PAGE_PROGRESS,
-    icon: ChartBarIcon,
+    icon: ICON_CHART_BAR,
   },
 ]
 
