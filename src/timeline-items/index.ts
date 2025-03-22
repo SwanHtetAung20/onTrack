@@ -1,5 +1,4 @@
 import { ref, type ComponentPublicInstance } from 'vue'
-import { activities } from '@/activity'
 import { HOURS_IN_DAY, type Activity, type TimeLineItem, MIDNIGHT_HOUR } from '@/constants'
 import { currentHour } from '@/functions'
 
@@ -26,8 +25,8 @@ export const updateTimelineItem = (
 const hasActivity = (timelineItem: TimeLineItem, activity: Activity): boolean => {
   return timelineItem.activityId === activity.id
 }
-export const resetTimelineActivity = (activity: Activity): void => {
-  timelineItems.value
+export const resetTimelineActivity = (timelineItems: TimeLineItem[], activity: Activity): void => {
+  timelineItems
     .filter((item: TimeLineItem) => hasActivity(item, activity))
     .forEach((timelineItem: TimeLineItem) =>
       updateTimelineItem(timelineItem, {
@@ -37,8 +36,11 @@ export const resetTimelineActivity = (activity: Activity): void => {
     )
 }
 
-export const getTotalActivitySeconds = (activity: Activity): number => {
-  return timelineItems.value
+export const calculateTrackedActivitySeconds = (
+  timelineItems: TimeLineItem[],
+  activity: Activity,
+): number => {
+  return timelineItems
     .filter((item) => hasActivity(item, activity))
     .reduce((totalSeconds, item) => Math.round(item.activitySeconds + totalSeconds), 0)
 }
