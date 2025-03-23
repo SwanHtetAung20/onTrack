@@ -31,7 +31,7 @@ export const resetTimelineActivity = (timelineItems: TimeLineItem[], activity: A
     .forEach((timelineItem: TimeLineItem) =>
       updateTimelineItem(timelineItem, {
         activityId: null,
-        activitySeconds: 0,
+        activitySeconds: timelineItem.hour === currentHour() ? timelineItem.activitySeconds : 0,
       }),
     )
 }

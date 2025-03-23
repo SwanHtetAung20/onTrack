@@ -8,7 +8,7 @@ import RemainingActivitySeconds from './RemainingActivitySeconds.vue'
 import { setSecondsToComplete, deleteActivityItem } from '@/activity'
 import { resetTimelineActivity, timelineItems } from '@/timeline-items'
 import { ICON_TRASH } from '@/icons'
-RemainingActivitySeconds
+
 defineProps({
   activity: {
     type: Object as () => Activity,

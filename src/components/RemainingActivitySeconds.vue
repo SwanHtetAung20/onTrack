@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formatSecond, formatSecondsWithSign } from '@/functions'
+import { formatSecondsWithSign } from '@/functions'
 import type { Activity } from '@/constants'
 import { isActivityItemValid } from '@/validator'
 import { computed } from 'vue'

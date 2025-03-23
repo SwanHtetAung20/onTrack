@@ -3,7 +3,7 @@ import { id } from '@/functions'
 import { type Activity } from '@/constants'
 
 const generateActivities = (): Activity[] => {
-  return ['Reading', 'Training', 'Coding'].map((name, index) => ({
+  return ['Reading', 'Training', 'Coding'].map((name) => ({
     id: id(),
     name,
     secondsToComplete: 15 * 60, //index * SECONDS_IN_HOUR,
