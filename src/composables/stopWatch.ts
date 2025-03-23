@@ -1,4 +1,4 @@
-import type { TimeLineItem } from '@/constants'
+import { MILLISECONDS_IN_SECOND, type TimeLineItem } from '@/constants'
 import { ref } from 'vue'
 
 export const useStopWatch = (timelineItem: TimeLineItem) => {
@@ -9,7 +9,7 @@ export const useStopWatch = (timelineItem: TimeLineItem) => {
   const start = () => {
     intervalId.value = setInterval(() => {
       seconds.value += 120
-    }, 1000) as unknown as number
+    }, MILLISECONDS_IN_SECOND) as unknown as number
     isRunning.value = true
   }
 
