@@ -9,7 +9,7 @@ import {
 } from '@/constants'
 import { formatSecond, currentHour } from '@/functions'
 import { isTimelineItemValid } from '@/validator'
-import { ref, watch } from 'vue'
+import { watch } from 'vue'
 import { updateTimelineItem } from '@/timeline-items'
 import { ICON_ARROW_PATH, ICON_PAUSE, ICON_PLAY } from '@/icons'
 import { useStopWatch } from '@/composables/stopWatch'
@@ -22,7 +22,16 @@ const props = defineProps({
   },
 })
 
-const { start, pause, reset, seconds, isRunning } = useStopWatch(props.timelineItem)
+const updateTimelineActivitySeconds = () => {
+  updateTimelineItem(props.timelineItem, { activitySeconds: seconds.value })
+}
+
+const { start, pause, reset, seconds, isRunning } = useStopWatch(
+  props.timelineItem,
+  updateTimelineActivitySeconds,
+)
+
+watch(() => props.timelineItem.activityId, updateTimelineActivitySeconds)
 </script>
 
 <template>

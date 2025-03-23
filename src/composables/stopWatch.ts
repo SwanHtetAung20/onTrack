@@ -1,24 +1,15 @@
 import type { TimeLineItem } from '@/constants'
-import { ref, watch } from 'vue'
-import { updateTimelineItem } from '@/timeline-items'
+import { ref } from 'vue'
 
-export const useStopWatch = (timelineItem: TimeLineItem) => {
+export const useStopWatch = (timelineItem: TimeLineItem, handleSecondsChange: () => void) => {
   const seconds = ref<number>(timelineItem.activitySeconds)
   const isRunning = ref<boolean>(false)
   const intervalId = ref<number | undefined>(undefined)
 
-  watch(
-    () => timelineItem.activityId,
-    () => updateTimelineItem(timelineItem, { activitySeconds: seconds.value }),
-  )
-
   const start = () => {
     intervalId.value = setInterval(() => {
       seconds.value += 120
-
-      updateTimelineItem(timelineItem, {
-        activitySeconds: timelineItem.activitySeconds + 120,
-      })
+      handleSecondsChange()
     }, 1000) as unknown as number
     isRunning.value = true
   }
@@ -30,12 +21,8 @@ export const useStopWatch = (timelineItem: TimeLineItem) => {
 
   const reset = () => {
     pause()
-
-    updateTimelineItem(timelineItem, {
-      activitySeconds: timelineItem.activitySeconds - seconds.value,
-    })
-
     seconds.value = 0
+    handleSecondsChange()
   }
 
   return {
