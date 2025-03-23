@@ -52,3 +52,7 @@ export const getProgressColor = (percentage: number): string => {
   if (percentage < HUNDRED_PERCENTAGE) return 'bg-orange-500'
   return 'bg-green-500'
 }
+
+export const formatSecondsWithSign = (seconds: number): string => {
+  return `${seconds >= 0 ? '+' : '-'}${formatSecond(seconds)}`
+}

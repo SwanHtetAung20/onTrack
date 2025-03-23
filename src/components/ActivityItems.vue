@@ -4,11 +4,11 @@ import BaseIcon from './BaseIcon.vue'
 import BaseSelect from './BaseSelect.vue'
 import { isActivityItemValid } from '@/validator'
 import { BUTTON_TYPE_DANGER, type Activity, PERIOD_SELECT_OPTIONS } from '@/constants'
-import ActivitySecondsToComplete from './ActivitySecondsToComplete.vue'
+import RemainingActivitySeconds from './RemainingActivitySeconds.vue'
 import { setSecondsToComplete, deleteActivityItem } from '@/activity'
 import { resetTimelineActivity, timelineItems } from '@/timeline-items'
 import { ICON_TRASH } from '@/icons'
-
+RemainingActivitySeconds
 defineProps({
   activity: {
     type: Object as () => Activity,
@@ -39,7 +39,7 @@ const deleteAndResetActivity = (activity: Activity) => {
         :selected="activity.secondsToComplete || null"
         @select="setSecondsToComplete(activity, Number($event))"
       />
-      <ActivitySecondsToComplete v-if="activity.secondsToComplete" :activity="activity" />
+      <RemainingActivitySeconds v-if="activity.secondsToComplete" :activity="activity" />
     </div>
   </li>
 </template>
