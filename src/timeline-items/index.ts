@@ -1,6 +1,7 @@
 import { ref, type ComponentPublicInstance } from 'vue'
 import { HOURS_IN_DAY, type Activity, type TimeLineItem, MIDNIGHT_HOUR } from '@/constants'
 import { currentHour } from '@/functions'
+//import { activities } from '@/activity'
 
 const generateTimelineItems = (): TimeLineItem[] => {
   return [...Array(HOURS_IN_DAY).keys()].map((hour) => ({

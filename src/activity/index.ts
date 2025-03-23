@@ -23,11 +23,21 @@ export const trackedActivities = computed(() =>
   activities.value.filter(({ secondsToComplete }) => secondsToComplete),
 )
 
+const totalActivitySecondsToComplete = computed((): number => {
+  return trackedActivities.value
+    .map(({ secondsToComplete }) => secondsToComplete)
+    .reduce((total, seconds) => total + seconds, 0)
+})
+
 export const calculateActivityCompletionPercentage = (
   { secondsToComplete }: Partial<Activity>,
   trackedSeconds: number,
 ): number => {
   return Math.floor((trackedSeconds * 100) / secondsToComplete)
+}
+
+export const calculateCompletionPercentage = (totalTrackedSeconds: number): number => {
+  return Math.floor((totalTrackedSeconds * 100) / totalActivitySecondsToComplete.value)
 }
 
 export const activitySelectOptions = computed(() => generateActivitySelectOptions(activities.value))
