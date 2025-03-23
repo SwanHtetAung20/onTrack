@@ -6,7 +6,7 @@ import {
   BUTTON_TYPE_WARNING,
   BUTTON_TYPE_SUCCESS,
 } from '@/constants'
-const typeClasses = {
+const typeClasses: Record<string, string> = {
   [BUTTON_TYPE_DANGER]: 'bg-red-500 enabled:hover:bg-red-600 text-white',
   [BUTTON_TYPE_NEUTRAL]: 'bg-gray-100 enabled:hover:bg-gray-200',
   [BUTTON_TYPE_PRIMARY]: 'bg-purple-500 enabled:hover:bg-purple-600 text-white',
