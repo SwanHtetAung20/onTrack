@@ -1,6 +1,6 @@
 import { ref, type ComponentPublicInstance } from 'vue'
 import { HOURS_IN_DAY, type Activity, type TimeLineItem, MIDNIGHT_HOUR } from '@/constants'
-import { currentHour } from '@/functions'
+import { now } from '@/time'
 //import { activities } from '@/activity'
 
 const generateTimelineItems = (): TimeLineItem[] => {
@@ -32,7 +32,8 @@ export const resetTimelineActivity = (timelineItems: TimeLineItem[], activity: A
     .forEach((timelineItem: TimeLineItem) =>
       updateTimelineItem(timelineItem, {
         activityId: null,
-        activitySeconds: timelineItem.hour === currentHour() ? timelineItem.activitySeconds : 0,
+        activitySeconds:
+          timelineItem.hour === now.value.getHours() ? timelineItem.activitySeconds : 0,
       }),
     )
 }
@@ -55,5 +56,5 @@ export const scrollToHour = (hour: number) => {
 }
 
 export const scrollToCurrentHour = () => {
-  scrollToHour(currentHour())
+  scrollToHour(now.value.getHours())
 }

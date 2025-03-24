@@ -42,10 +42,6 @@ export const formatSecond = (second: number) => {
   return utc.substring(utc.indexOf(':') - 2, utc.indexOf(':') + 6)
 }
 
-export const currentHour = (): number => {
-  return new Date().getHours()
-}
-
 export const getProgressColor = (percentage: number): string => {
   if (percentage < LOW_PERCENTAGE) return 'bg-red-500'
   if (percentage < MEDIUM_PERCENTAGE) return 'bg-yellow-500'
