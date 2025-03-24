@@ -9,7 +9,7 @@ import {
 } from '@/constants'
 import { formatSecond } from '@/functions'
 import { isTimelineItemValid } from '@/validator'
-import { watchEffect } from 'vue'
+import { onMounted, watch, watchEffect } from 'vue'
 import { updateTimelineItem } from '@/timeline-items'
 import { ICON_ARROW_PATH, ICON_PAUSE, ICON_PLAY } from '@/icons'
 import { useStopWatch } from '@/composables/stopWatch'
@@ -25,6 +25,12 @@ const props = defineProps({
 
 const { start, pause, reset, seconds, isRunning } = useStopWatch(props.timelineItem)
 
+onMounted(() => {
+  if (props.timelineItem.isActive) {
+    start()
+  }
+})
+
 watchEffect(() => {
   if (props.timelineItem.hour !== now.value.getHours() && isRunning.value) {
     pause()
@@ -32,6 +38,8 @@ watchEffect(() => {
 })
 
 watchEffect(() => updateTimelineItem(props.timelineItem, { activitySeconds: seconds.value }))
+
+watch(isRunning, () => updateTimelineItem(props.timelineItem, { isActive: isRunning.value }))
 </script>
 
 <template>
