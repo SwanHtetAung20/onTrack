@@ -19,6 +19,7 @@ export const BUTTON_TYPE_WARNING = 'warning'
 export const LOW_PERCENTAGE = 33
 export const MEDIUM_PERCENTAGE = 66
 export const HUNDRED_PERCENTAGE = 100
+export const APP_NAME = 'timeTracker'
 
 export const BUTTON_TYPES = [
   BUTTON_TYPE_DANGER,
@@ -58,6 +59,11 @@ export interface Activity {
   id: string
   name: string
   secondsToComplete: number
+}
+
+export interface SaveData {
+  timelineItems: TimeLineItem[]
+  activities: Activity[]
 }
 
 export const PERIOD_SELECT_OPTIONS = generatePeriodSelection()

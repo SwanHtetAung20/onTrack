@@ -7,7 +7,11 @@ import {
 } from '@/constants'
 
 const timer = ref<number | undefined>(undefined)
-export const now = ref<Date>(new Date())
+
+const date = new Date()
+date.setHours(0, 0)
+
+export const now = ref<Date>(date)
 
 const midnight = computed(() => new Date(now.value).setHours(0, 0, 0, 0))
 
@@ -20,7 +24,7 @@ export const secondsSinceMidnightInPercentage = computed(
 )
 
 export const startTimer = () => {
-  now.value = new Date()
+  now.value = date //new Date()
   timer.value = setInterval(() => {
     now.value = new Date(now.value.getTime() + SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND)
   }, MILLISECONDS_IN_SECOND) as unknown as number
