@@ -2,15 +2,7 @@ import { ref, computed } from 'vue'
 import { id } from '@/functions'
 import { type Activity } from '@/constants'
 
-const generateActivities = (): Activity[] => {
-  return ['Reading', 'Training', 'Coding'].map((name) => ({
-    id: id(),
-    name,
-    secondsToComplete: 15 * 60, //index * SECONDS_IN_HOUR,
-  }))
-}
-
-export const activities = ref(generateActivities())
+export const activities = ref<Activity[]>([])
 
 const generateActivitySelectOptions = (activities: Activity[]) => {
   return activities.map((activity) => ({
