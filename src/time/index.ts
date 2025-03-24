@@ -1,5 +1,10 @@
 import { ref, computed } from 'vue'
-import { MILLISECONDS_IN_SECOND, HUNDRED_PERCENTAGE, SECONDS_IN_DAY } from '@/constants'
+import {
+  MILLISECONDS_IN_SECOND,
+  HUNDRED_PERCENTAGE,
+  SECONDS_IN_DAY,
+  SECONDS_IN_MINUTE,
+} from '@/constants'
 
 const timer = ref<number | undefined>(undefined)
 export const now = ref<Date>(new Date())
@@ -17,7 +22,7 @@ export const secondsSinceMidnightInPercentage = computed(
 export const startTimer = () => {
   now.value = new Date()
   timer.value = setInterval(() => {
-    now.value = new Date(now.value.getTime() + 5 * 60 * MILLISECONDS_IN_SECOND)
+    now.value = new Date(now.value.getTime() + SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND)
   }, MILLISECONDS_IN_SECOND) as unknown as number
 }
 
