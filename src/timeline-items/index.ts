@@ -1,5 +1,11 @@
 import { ref, type ComponentPublicInstance } from 'vue'
-import { HOURS_IN_DAY, type Activity, type TimeLineItem, MIDNIGHT_HOUR } from '@/constants'
+import {
+  HOURS_IN_DAY,
+  type Activity,
+  type TimeLineItem,
+  MIDNIGHT_HOUR,
+  MILLISECONDS_IN_SECOND,
+} from '@/constants'
 import { now } from '@/time'
 //import { activities } from '@/activity'
 
@@ -16,6 +22,7 @@ const generateTimelineItems = (): TimeLineItem[] => {
 
 export const timelineItems = ref<TimeLineItem[]>(generateTimelineItems())
 export const timelineItemsRef = ref<ComponentPublicInstance[]>([])
+const timelineItemTimer = ref<number | undefined>(undefined)
 
 export const updateTimelineItem = (
   timelineItem: TimeLineItem,
@@ -58,4 +65,18 @@ export const scrollToHour = (hour: number) => {
 
 export const scrollToCurrentHour = () => {
   scrollToHour(now.value.getHours())
+}
+
+export const findActiveTimelineItem = (): TimeLineItem | undefined => {
+  return timelineItems.value.find(({ isActive }) => isActive)
+}
+
+export const startTimelineItemTimer = (timelineItem: TimeLineItem) => {
+  timelineItemTimer.value = setInterval(() => {
+    updateTimelineItem(timelineItem, { activitySeconds: timelineItem.activitySeconds + 1 })
+  }, MILLISECONDS_IN_SECOND) as unknown as number
+}
+
+export const stopTimelineItemTimer = () => {
+  clearInterval(timelineItemTimer.value)
 }

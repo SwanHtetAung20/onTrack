@@ -4,6 +4,9 @@ import { onActivated, onDeactivated } from 'vue'
 import { timelineItems, timelineItemsRef, scrollToCurrentHour } from '@/timeline-items'
 import TheTimelineIndicator from '@/components/TheTimelineIndicator.vue'
 import { startTimer, stopTimer } from '@/time'
+import { stopTimelineItemTimer } from '@/timeline-items'
+
+stopTimelineItemTimer()
 
 onActivated(() => {
   scrollToCurrentHour()
