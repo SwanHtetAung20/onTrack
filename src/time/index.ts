@@ -1,39 +1,23 @@
-import { ref, watchEffect, computed } from 'vue'
-import {
-  MILLISECONDS_IN_SECOND,
-  HUNDRED_PERCENTAGE,
-  SECONDS_IN_DAY,
-  SECONDS_IN_MINUTE,
-  MINUTES_IN_HOUR,
-} from '@/constants'
-
-const calculateSecondsSinceMidnight = () => {
-  const now = new Date()
-  return (
-    SECONDS_IN_MINUTE * MINUTES_IN_HOUR * now.getHours() +
-    SECONDS_IN_MINUTE * now.getMinutes() +
-    now.getSeconds()
-  )
-}
+import { ref, computed } from 'vue'
+import { MILLISECONDS_IN_SECOND, HUNDRED_PERCENTAGE, SECONDS_IN_DAY } from '@/constants'
 
 const timer = ref<number | undefined>(undefined)
+export const now = ref<Date>(new Date())
 
-const secondsSinceMidnight = ref<number>(calculateSecondsSinceMidnight())
+const midnight = computed(() => new Date(now.value).setHours(0, 0, 0, 0))
 
-watchEffect(() => {
-  if (secondsSinceMidnight.value > SECONDS_IN_DAY) {
-    secondsSinceMidnight.value = 0
-  }
-})
+const secondsSinceMidnight = computed(
+  () => (now.value.getTime() - midnight.value) / MILLISECONDS_IN_SECOND,
+)
 
 export const secondsSinceMidnightInPercentage = computed(
   () => (HUNDRED_PERCENTAGE * secondsSinceMidnight.value) / SECONDS_IN_DAY,
 )
 
 export const startTimer = () => {
-  secondsSinceMidnight.value = calculateSecondsSinceMidnight()
+  now.value = new Date()
   timer.value = setInterval(() => {
-    secondsSinceMidnight.value += 5 * 60
+    now.value = new Date(now.value.getTime() + 5 * 60 * MILLISECONDS_IN_SECOND)
   }, MILLISECONDS_IN_SECOND) as unknown as number
 }
 
