@@ -1,10 +1,11 @@
 import { APP_NAME, type TimeLineItem } from '@/constants'
 import { today, isToday, toSeconds } from '@/time'
 import { activities } from '@/activity'
-import { timelineItems } from '@/timeline-items'
+import { activeTimelineItem, timelineItems } from '@/timeline-items'
 import { endOfHour } from '@/time'
+import { startTimelineItemTimer, stopTimelineItemTimer } from '@/timeline-items/timeline-item-timer'
 
-export const saveState = () => {
+export const saveState = (): void => {
   localStorage.setItem(
     APP_NAME,
     JSON.stringify({
@@ -30,7 +31,7 @@ const syncIdleSeconds = (timelineItems: TimeLineItem[], lastActiveAt: Date) => {
   return timelineItems
 }
 
-export const loadState = () => {
+export const loadState = (): void => {
   const serializedState = localStorage.getItem(APP_NAME)
   const state = serializedState ? JSON.parse(serializedState) : {}
   activities.value = state.activities || activities.value
@@ -38,4 +39,14 @@ export const loadState = () => {
   timelineItems.value = isToday(lastActiveAt)
     ? syncIdleSeconds(state.timelineItems, lastActiveAt)
     : timelineItems.value
+}
+
+export const syncState = (shouldLoad: boolean = true): void => {
+  shouldLoad ? loadState() : saveState()
+
+  if (activeTimelineItem.value) {
+    shouldLoad
+      ? startTimelineItemTimer(activeTimelineItem.value)
+      : stopTimelineItemTimer(activeTimelineItem.value)
+  }
 }
