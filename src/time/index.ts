@@ -8,10 +8,19 @@ import {
 
 const timer = ref<number | undefined>(undefined)
 
-const date = new Date()
-date.setHours(0, 0)
+export const today = () => {
+  const today = new Date()
+  today.setHours(0, 0)
+  return today
+}
 
-export const now = ref<Date>(date)
+export const tomorrow = () => {
+  const tomorrow = today()
+  tomorrow.setDate(tomorrow.getDate() + 1)
+  return tomorrow
+}
+
+export const now = ref<Date>(today())
 
 const midnight = computed(() => new Date(now.value).setHours(0, 0, 0, 0))
 
@@ -24,7 +33,7 @@ export const secondsSinceMidnightInPercentage = computed(
 )
 
 export const startTimer = () => {
-  now.value = date //new Date()
+  now.value = today()
   timer.value = setInterval(() => {
     now.value = new Date(now.value.getTime() + SECONDS_IN_MINUTE * MILLISECONDS_IN_SECOND)
   }, MILLISECONDS_IN_SECOND) as unknown as number
@@ -32,4 +41,8 @@ export const startTimer = () => {
 
 export const stopTimer = () => {
   clearInterval(timer.value)
+}
+
+export const isToday = (date: Date) => {
+  return date.toDateString() == today().toDateString()
 }

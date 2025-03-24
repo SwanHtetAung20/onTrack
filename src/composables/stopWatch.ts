@@ -8,7 +8,7 @@ export const useStopWatch = (timelineItem: TimeLineItem) => {
 
   const start = () => {
     intervalId.value = setInterval(() => {
-      seconds.value += 120
+      seconds.value += 1
     }, MILLISECONDS_IN_SECOND) as unknown as number
     isRunning.value = true
   }
