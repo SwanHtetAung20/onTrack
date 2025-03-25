@@ -60,3 +60,11 @@ export const scrollToHour = (hour: number) => {
 export const scrollToCurrentHour = () => {
   scrollToHour(now.value.getHours())
 }
+
+export const resetTimelineItems = (timelineItems: TimeLineItem[]) => {
+  return timelineItems.map((timelineItem) => ({
+    ...timelineItem,
+    activitySeconds: 0,
+    isActive: false,
+  }))
+}
