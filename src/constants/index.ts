@@ -65,6 +65,7 @@ export interface Activity {
 export interface SaveData {
   timelineItems: TimeLineItem[]
   activities: Activity[]
+  lastActiveAt: Date
 }
 
 export const PERIOD_SELECT_OPTIONS = generatePeriodSelection()

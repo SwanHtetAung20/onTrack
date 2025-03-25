@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 import { id } from '@/functions'
-import { type Activity } from '@/constants'
+import { type Activity, type SaveData } from '@/constants'
 
 export const activities = ref<Activity[]>([])
 
@@ -51,4 +51,8 @@ export const createActivity = (name: string): void => {
 
 export const setSecondsToComplete = (activity: Activity, secondsToComplete: number): void => {
   activity.secondsToComplete = secondsToComplete || 0
+}
+
+export const initializeActivities = (state: SaveData) => {
+  activities.value = state.activities || []
 }

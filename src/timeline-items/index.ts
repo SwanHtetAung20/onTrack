@@ -1,6 +1,12 @@
 import { ref, type ComponentPublicInstance, computed } from 'vue'
-import { HOURS_IN_DAY, type Activity, type TimeLineItem, MIDNIGHT_HOUR } from '@/constants'
-import { now } from '@/time'
+import {
+  HOURS_IN_DAY,
+  type Activity,
+  type TimeLineItem,
+  MIDNIGHT_HOUR,
+  type SaveData,
+} from '@/constants'
+import { now, toSeconds, today, isToday, endOfHour } from '@/time'
 
 const generateTimelineItems = (): TimeLineItem[] => {
   return [...Array(HOURS_IN_DAY).keys()].map((hour) => ({
@@ -11,7 +17,7 @@ const generateTimelineItems = (): TimeLineItem[] => {
   }))
 }
 
-export const timelineItems = ref<TimeLineItem[]>(generateTimelineItems())
+export const timelineItems = ref<TimeLineItem[]>([])
 export const timelineItemsRef = ref<ComponentPublicInstance[]>([])
 
 export const activeTimelineItem = computed(() =>
@@ -67,4 +73,30 @@ export const resetTimelineItems = (timelineItems: TimeLineItem[]) => {
     activitySeconds: 0,
     isActive: false,
   }))
+}
+
+const calculateIdleSeconds = (lastActiveAt: Date): number => {
+  return lastActiveAt.getHours() === today().getHours()
+    ? toSeconds(today().getTime() - lastActiveAt.getTime())
+    : toSeconds(endOfHour(lastActiveAt) - lastActiveAt.getTime())
+}
+
+const syncIdleSeconds = (timelineItems: TimeLineItem[], lastActiveAt: Date) => {
+  const activeTimelineItem = timelineItems.find(({ isActive }) => isActive)
+
+  if (activeTimelineItem) {
+    activeTimelineItem.activitySeconds += calculateIdleSeconds(lastActiveAt)
+  }
+  return timelineItems
+}
+
+export const initializeTimelineItems = (state: SaveData) => {
+  const lastActiveAt = new Date(state.lastActiveAt)
+
+  timelineItems.value = state.timelineItems ?? generateTimelineItems()
+  if (activeTimelineItem.value && isToday(lastActiveAt)) {
+    timelineItems.value = syncIdleSeconds(state.timelineItems, lastActiveAt)
+  } else if (state.timelineItems && !isToday(lastActiveAt)) {
+    timelineItems.value = resetTimelineItems(state.timelineItems)
+  }
 }
