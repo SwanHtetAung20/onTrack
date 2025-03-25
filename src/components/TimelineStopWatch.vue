@@ -13,10 +13,10 @@ import {
   resetTimelineItemTimer,
   startTimelineItemTimer,
   stopTimelineItemTimer,
-  timelineItemTimer,
 } from '../timeline-items/timeline-item-timer'
 import { ICON_ARROW_PATH, ICON_PAUSE, ICON_PLAY } from '@/icons'
 import { now } from '@/time'
+import { activeTimelineItem } from '@/timeline-items'
 
 defineProps({
   timelineItem: {
@@ -40,9 +40,9 @@ defineProps({
       {{ formatSecond(timelineItem.activitySeconds) }}
     </div>
     <BaseButton
-      v-if="timelineItemTimer && timelineItem.hour === now.getHours()"
+      v-if="timelineItem === activeTimelineItem"
       :type="BUTTON_TYPE_WARNING"
-      @click="stopTimelineItemTimer(timelineItem)"
+      @click="stopTimelineItemTimer"
     >
       <BaseIcon :name="ICON_PAUSE" />
     </BaseButton>
