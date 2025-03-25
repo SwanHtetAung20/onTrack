@@ -56,16 +56,16 @@ export const calculateTrackedActivitySeconds = (
     .reduce((totalSeconds, item) => Math.round(item.activitySeconds + totalSeconds), 0)
 }
 
-export const scrollToHour = (hour: number) => {
+export const scrollToHour = (hour: number, isSmooth: boolean = false) => {
   const el = hour === MIDNIGHT_HOUR ? document.body : timelineItemsRef.value[hour - 1].$el
   el.scrollIntoView({
-    behavior: 'smooth',
+    behavior: isSmooth ? 'smooth' : 'auto',
     block: 'start',
   })
 }
 
-export const scrollToCurrentHour = () => {
-  scrollToHour(today().getHours())
+export const scrollToCurrentHour = (isSmooth: boolean = false) => {
+  scrollToHour(today().getHours(), isSmooth)
 }
 
 const resetTimelineItems = () => {
