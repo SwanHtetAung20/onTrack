@@ -1,4 +1,4 @@
-import { ref, type ComponentPublicInstance, computed } from 'vue'
+import { ref, type ComponentPublicInstance, computed, watch } from 'vue'
 import {
   HOURS_IN_DAY,
   type Activity,
@@ -6,7 +6,8 @@ import {
   MIDNIGHT_HOUR,
   type SaveData,
 } from '@/constants'
-import { toSeconds, today, isToday, endOfHour } from '@/time'
+import { toSeconds, today, isToday, endOfHour, now } from '@/time'
+import { stopTimelineItemTimer } from './timeline-item-timer'
 
 const generateTimelineItems = (): TimeLineItem[] => {
   return [...Array(HOURS_IN_DAY).keys()].map((hour) => ({
@@ -75,6 +76,16 @@ const resetTimelineItems = () => {
     }),
   )
 }
+
+watch(now, (after, before) => {
+  if (activeTimelineItem.value && activeTimelineItem.value.hour !== after.getHours()) {
+    stopTimelineItemTimer()
+  }
+
+  if (before.getHours() !== after.getHours() && after.getHours() === MIDNIGHT_HOUR) {
+    resetTimelineItems()
+  }
+})
 
 const calculateIdleSeconds = (lastActiveAt: Date): number => {
   return lastActiveAt.getHours() === today().getHours()
