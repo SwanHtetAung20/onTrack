@@ -67,12 +67,13 @@ export const scrollToCurrentHour = () => {
   scrollToHour(now.value.getHours())
 }
 
-export const resetTimelineItems = (timelineItems: TimeLineItem[]) => {
-  return timelineItems.map((timelineItem) => ({
-    ...timelineItem,
-    activitySeconds: 0,
-    isActive: false,
-  }))
+const resetTimelineItems = () => {
+  return timelineItems.value.forEach((timelineItem) =>
+    updateTimelineItem(timelineItem, {
+      activitySeconds: 0,
+      isActive: false,
+    }),
+  )
 }
 
 const calculateIdleSeconds = (lastActiveAt: Date): number => {
@@ -81,13 +82,10 @@ const calculateIdleSeconds = (lastActiveAt: Date): number => {
     : toSeconds(endOfHour(lastActiveAt) - lastActiveAt.getTime())
 }
 
-const syncIdleSeconds = (timelineItems: TimeLineItem[], lastActiveAt: Date) => {
-  const activeTimelineItem = timelineItems.find(({ isActive }) => isActive)
-
-  if (activeTimelineItem) {
-    activeTimelineItem.activitySeconds += calculateIdleSeconds(lastActiveAt)
-  }
-  return timelineItems
+const syncIdleSeconds = (lastActiveAt: Date) => {
+  updateTimelineItem(activeTimelineItem.value!, {
+    activitySeconds: activeTimelineItem.value!.activitySeconds + calculateIdleSeconds(lastActiveAt),
+  })
 }
 
 export const initializeTimelineItems = (state: SaveData) => {
@@ -95,8 +93,8 @@ export const initializeTimelineItems = (state: SaveData) => {
 
   timelineItems.value = state.timelineItems ?? generateTimelineItems()
   if (activeTimelineItem.value && isToday(lastActiveAt)) {
-    timelineItems.value = syncIdleSeconds(state.timelineItems, lastActiveAt)
+    syncIdleSeconds(lastActiveAt)
   } else if (state.timelineItems && !isToday(lastActiveAt)) {
-    timelineItems.value = resetTimelineItems(state.timelineItems)
+    resetTimelineItems()
   }
 }
