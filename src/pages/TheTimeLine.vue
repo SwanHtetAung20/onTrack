@@ -1,16 +1,10 @@
 <script setup lang="ts">
 import TimelineItem from '@/components/TimelineItem.vue'
-import { onActivated, onDeactivated } from 'vue'
+import { onActivated } from 'vue'
 import { timelineItems, timelineItemsRef, scrollToCurrentHour } from '@/timeline-items'
 import TheTimelineIndicator from '@/components/TheTimelineIndicator.vue'
-import { startCurrentDateTimer, stopCurrentDateTimer } from '@/time'
 
-onActivated(() => {
-  scrollToCurrentHour()
-  startCurrentDateTimer()
-})
-
-onDeactivated(stopCurrentDateTimer)
+onActivated(scrollToCurrentHour)
 </script>
 
 <template>

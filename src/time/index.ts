@@ -6,11 +6,11 @@ import {
   SECONDS_IN_HOUR,
 } from '@/constants'
 
-const currentDateTimer = ref<number | undefined>(undefined)
-
 export const today = () => {
   const today = new Date()
-  //today.setHours(0, 0)
+  today.setHours(11)
+  today.setMinutes(59)
+  today.setSeconds(55)
   return today
 }
 
@@ -33,14 +33,13 @@ export const secondsSinceMidnightInPercentage = computed(
 )
 
 export const startCurrentDateTimer = () => {
-  now.value = today()
-  currentDateTimer.value = setInterval(() => {
+  // currentDateTimer.value = setInterval(
+  //   () => (now.value = today()),
+  //   MILLISECONDS_IN_SECOND,
+  // ) as unknown as number
+  setInterval(() => {
     now.value = new Date(now.value.getTime() + MILLISECONDS_IN_SECOND)
   }, MILLISECONDS_IN_SECOND) as unknown as number
-}
-
-export const stopCurrentDateTimer = () => {
-  clearInterval(currentDateTimer.value)
 }
 
 export const isToday = (date: Date) => {

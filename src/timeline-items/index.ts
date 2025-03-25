@@ -6,7 +6,7 @@ import {
   MIDNIGHT_HOUR,
   type SaveData,
 } from '@/constants'
-import { now, toSeconds, today, isToday, endOfHour } from '@/time'
+import { toSeconds, today, isToday, endOfHour } from '@/time'
 
 const generateTimelineItems = (): TimeLineItem[] => {
   return [...Array(HOURS_IN_DAY).keys()].map((hour) => ({
@@ -41,7 +41,7 @@ export const resetTimelineActivity = (timelineItems: TimeLineItem[], activity: A
       updateTimelineItem(timelineItem, {
         activityId: null,
         activitySeconds:
-          timelineItem.hour === now.value.getHours() ? timelineItem.activitySeconds : 0,
+          timelineItem.hour === today().getHours() ? timelineItem.activitySeconds : 0,
       }),
     )
 }
@@ -64,7 +64,7 @@ export const scrollToHour = (hour: number) => {
 }
 
 export const scrollToCurrentHour = () => {
-  scrollToHour(now.value.getHours())
+  scrollToHour(today().getHours())
 }
 
 const resetTimelineItems = () => {
